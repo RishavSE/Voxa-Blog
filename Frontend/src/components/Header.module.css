@@ -1,0 +1,68 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  cursor: pointer;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.navLink {
+  margin: 0 1rem;
+  text-decoration: none;
+  color: hotpink;
+  /* color: black; */
+  font-weight: normal;
+  transition: color 0.3s ease;
+}
+
+.navLink:hover {
+  
+  font-weight: bold;
+}
+
+.active {
+  color: hotpink;
+  font-weight: bold;
+}
+
+.loginBtn {
+  background: hotpink;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  nav {
+    margin: 0.5rem 0;
+  }
+}
+.userSection {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.userInfo {
+  font-weight: 600;
+  color: #333;
+}
+
+.userRole {
+  font-style: italic;
+  color: hotpink;
+  margin-left: 0.3rem;
+}

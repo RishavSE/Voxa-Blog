@@ -1,0 +1,106 @@
+.login-container {
+  text-align: center;
+  padding-top: 40px;
+}
+
+.login-title {
+  font-size: 24px;
+  color: #f25c9c;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.login-box {
+  background-color: #e1d8fc;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.input-label {
+  display: block;
+  margin-bottom: 5px;
+  text-align: left;
+  font-weight: bold;
+}
+
+.input-field {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.login-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #ff6f91;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.login-btn:hover {
+  background-color: #f25c9c;
+}
+
+.sign-in-here {
+  margin-top: 15px;
+  color: #f25c9c;
+  font-weight: bold;
+  cursor: pointer;
+}
+.close-btn {
+  background: transparent;
+  border: none;
+  color: #f25c9c;
+  font-size: 18px;
+  float: right;
+  cursor: pointer;
+}
+.login-message {
+  text-align: center;
+  margin-top: 10px;
+  color: red;
+  font-weight: 500;
+}
+
+.input-field {
+  margin-bottom: 1rem;
+}
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(6px);
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+  width: 320px;
+  text-align: center;
+  position: relative;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}

@@ -1,0 +1,27 @@
+.toolbar-btn {
+  padding: 6px 10px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+}
+
+.toolbar-btn:hover {
+  background-color: #e6f0ff;
+  border-color: #007bff;
+}
+.editor-toolbar {
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 8px;
+}
+.mainContent {
+  transition: filter 0.3s ease;
+}
+
+.blurred {
+  filter: blur(5px);
+  pointer-events: none;
+}
