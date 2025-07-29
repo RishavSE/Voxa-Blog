@@ -23,6 +23,7 @@ const SignupPage = ({ onBackToLogin }) => {
 
     try {
       const res = await API.post("/register", {
+        name,
         email,
         password,
         role,
