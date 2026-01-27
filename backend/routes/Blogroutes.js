@@ -108,23 +108,30 @@ router.post("/:id/comment", async (req, res) => {
 // ✅ DELETE /blogs/:id/comment/:commentId → delete comment
 router.delete("/:id/comment/:commentId", async (req, res) => {
   try {
-    const { userId } = req.body;
+    const { userId } = req.query; 
 
     const blog = await Blog.findById(req.params.id);
     if (!blog) return res.status(404).json({ error: "Blog not found" });
 
-    const comment = blog.comments.find((c) => c._id === req.params.commentId);
+    const comment = blog.comments.find(
+      (c) => c._id.toString() === req.params.commentId 
+    );
     if (!comment) return res.status(404).json({ error: "Comment not found" });
 
     if (comment.userId !== userId) {
-      return res.status(403).json({ error: "You can only delete your own comment" });
+      return res
+        .status(403)
+        .json({ error: "You can only delete your own comment" });
     }
 
-    blog.comments = blog.comments.filter((c) => c._id !== req.params.commentId);
+    blog.comments = blog.comments.filter(
+      (c) => c._id.toString() !== req.params.commentId 
+    );
+
     await blog.save();
     res.json({ message: "Comment deleted" });
   } catch (err) {
-    console.error("DELETE /blogs/:id/comment/:commentId error:", err);
+    console.error("DELETE comment error:", err);
     res.status(500).json({ error: "Failed to delete comment" });
   }
 });
