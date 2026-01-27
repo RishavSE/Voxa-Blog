@@ -96,7 +96,9 @@ router.post("/:id/comment", async (req, res) => {
 
     blog.comments.push(newComment);
     await blog.save();
-    res.status(201).json(newComment);
+   res.status(201).json(
+      blog.comments[blog.comments.length - 1]
+    );
   } catch (err) {
     console.error("❌ POST /blogs/:id/comment error:", err);
     res.status(500).json({ error: "Failed to add comment" });
