@@ -1,4 +1,4 @@
-# 📝 Voxalog  
+# 🎥 Voxalog 📹
 **A modern blogging platform – User-side implementation**
 
 Voxalog is a feature-rich blogging platform built using the MERN stack. It enables users to register, log in, write blogs with media, interact with others' posts, and manage their own content — all through a clean and responsive UI.
