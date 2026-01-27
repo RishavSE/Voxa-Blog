@@ -82,9 +82,9 @@ const Trending = ({ setActiveBlog, user }) => {
     if (!user) return;
 
     try {
-      await API.delete(`/blogs/${blogId}/comment/${commentId}`, {
-        data: { userId: user.email },
-      });
+      await API.delete(
+  `/blogs/${blogId}/comment/${commentId}?userId=${user.email}`
+);
 
       setComments(prev => ({
         ...prev,
@@ -166,9 +166,15 @@ const Trending = ({ setActiveBlog, user }) => {
                       {user?.email === c.userId && (
                         <button
                           onClick={() => handleDeleteComment(blog._id, c._id)}
-                          style={{ marginLeft: "10px", color: "red" }}
-                        >
-                          ❌ Delete
+                          style={{
+                              marginLeft: "10px",
+                              color: "red",
+                              background: "transparent",
+                              border: "none",
+                              cursor: "pointer",
+                            }}
+                          >
+                            🗑️ Delete
                         </button>
                       )}
                     </li>
