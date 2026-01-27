@@ -35,13 +35,13 @@ Link: 👉    https://drive.google.com/file/d/1Mc-TWqcONFHcl58lM9fvHko6fHXyWRS2/
 ### 🌐 Public Interaction
 - After login, all users can:
   - View all published blogs
-  - Like or unlike any blog
+  - Like  any blog
   - Add comments to others' posts
 - Real-time count of likes and comments visible to all
 
 ### 🎨 User Interface
 - Responsive UI for mobile and desktop
-- Clean layout using plain CSS
+- Clean layout using vanilla CSS
 - Smooth blur effect for modal dialogs (e.g. forgot password)
 
 ---
