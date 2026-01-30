@@ -43,7 +43,7 @@ const LoginPage = ({ onClose, onSignupClick, onLoginSuccess }) => {
         newPassword: newPassword.trim(),
       });
 
-      setResetMessage("✅ Password updated successfully!");
+      setResetMessage(" Password updated successfully!");
       setResetEmail("");
       setNewPassword("");
       setConfirmPassword("");
