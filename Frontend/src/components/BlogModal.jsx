@@ -7,7 +7,7 @@ const BlogModal = ({ blog, onClose, user }) => {
   const [commentText, setCommentText] = useState("");
   const [comments, setComments] = useState(blog.comments || []);
 
-  // ✅ Render Lexical JSON content
+  //  Render Lexical JSON content
   const renderContent = (content) => {
     if (!content?.root?.children) return null;
 
@@ -55,7 +55,7 @@ const BlogModal = ({ blog, onClose, user }) => {
 
         <h2 className="title">{blog.title}</h2>
 
-        {/* ✅ Handle both video and image */}
+        {/*  Handle both video and image */}
         {blog.mediaUrl && (
           blog.mediaUrl.endsWith(".mp4") || blog.mediaUrl.includes("video") ? (
             <video
