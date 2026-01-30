@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import './Signup.css';
-import API from '../api'; // Ensure this is your configured Axios instance
+import API from '../api'; 
 
 const SignupPage = ({ onBackToLogin }) => {
-  const [name, setName] = useState(""); // Name not saved yet
+  const [name, setName] = useState(""); 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -29,7 +29,7 @@ const SignupPage = ({ onBackToLogin }) => {
         role,
       });
 
-      setMessage("✅ " + res.data.message);
+      setMessage(res.data.message);
     } catch (err) {
       setMessage("❌ " + (err.response?.data?.message || "Signup failed."));
     }
