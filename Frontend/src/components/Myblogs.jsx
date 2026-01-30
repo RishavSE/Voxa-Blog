@@ -72,17 +72,17 @@ const MyBlogs = () => {
 
       await API.post("/blogs", formData);
 
-      // ✅ Reset states
+      //  Reset states
       setTitle("");
       setDescription("");
       setMediaFile(null);
       setMediaPreviewUrl(null);
       setEditorContent(null);
-      setEditorKey(Date.now()); // ✅ Reset Lexical Editor
+      setEditorKey(Date.now()); //  Reset Lexical Editor
       if (fileInputRef.current) fileInputRef.current.value = null;
 
       setSaved(true);
-      alert("✅ Blog posted successfully!");
+      alert(" Blog posted successfully!");
     } catch (error) {
       console.error("Post error:", error);
       alert("❌ Failed to post blog. Check console.");
