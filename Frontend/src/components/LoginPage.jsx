@@ -23,7 +23,7 @@ const LoginPage = ({ onClose, onSignupClick, onLoginSuccess }) => {
       });
 
       const { token, email: returnedEmail, role: returnedRole } = res.data;
-      setMessage("✅ Login successful");
+      setMessage("Login successful");
 
       onLoginSuccess(returnedEmail, returnedRole, token);
     } catch (err) {
