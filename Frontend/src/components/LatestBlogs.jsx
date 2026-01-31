@@ -9,6 +9,10 @@ const LatestBlogs = ({ setActiveBlog, user }) => {
   const [commentText, setCommentText] = useState({});
   const [expandedBlogId, setExpandedBlogId] = useState(null);
 
+  
+  const truncateText = (text = "", limit = 100) =>
+    text.length > limit ? text.slice(0, limit) + "..." : text;
+
   // Fetch blogs
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -37,7 +41,7 @@ const LatestBlogs = ({ setActiveBlog, user }) => {
     fetchBlogs();
   }, []);
 
-  // Like handler
+  
   const handleLike = async (id) => {
     if (!user) return alert("Please login to like the blog.");
 
@@ -52,7 +56,7 @@ const LatestBlogs = ({ setActiveBlog, user }) => {
     }
   };
 
-  // Add comment
+  
   const handleAddComment = async (id) => {
     if (!user) return alert("Please login to comment.");
 
@@ -77,7 +81,7 @@ const LatestBlogs = ({ setActiveBlog, user }) => {
     }
   };
 
-  // ✅ Delete comment (MATCHES Trending)
+  
   const handleDeleteComment = async (blogId, commentId) => {
     if (!user) return;
 
@@ -88,9 +92,7 @@ const LatestBlogs = ({ setActiveBlog, user }) => {
 
       setComments((prev) => ({
         ...prev,
-        [blogId]: prev[blogId].filter(
-          (c) => c._id !== commentId
-        ),
+        [blogId]: prev[blogId].filter((c) => c._id !== commentId),
       }));
     } catch (err) {
       alert(
@@ -100,23 +102,7 @@ const LatestBlogs = ({ setActiveBlog, user }) => {
     }
   };
 
-  // Render Lexical content preview
-  const renderContent = (content) => {
-    if (!content?.root?.children) return "No description available.";
-    try {
-      const firstBlock = content.root.children[0];
-      return (
-        firstBlock.children
-          ?.map((child) => child.text)
-          .join("")
-          .slice(0, 100) + "..."
-      );
-    } catch {
-      return "Invalid content.";
-    }
-  };
-
-  // Render media
+ 
   const renderMedia = (mediaUrl = "") => {
     if (!mediaUrl) return null;
     const isVideo =
@@ -147,9 +133,45 @@ const LatestBlogs = ({ setActiveBlog, user }) => {
             <div className={styles.card}>
               {renderMedia(blog.mediaUrl)}
 
-              <h3>{blog.title}</h3>
-              <p>{renderContent(blog.content)}</p>
+              {/* Title */}
+              <h3>
+                {truncateText(blog.title, 50)}
+                {blog.title.length > 50 && (
+                  <span
+                    onClick={() => setActiveBlog(blog)}
+                    style={{
+                      color: "#007bff",
+                      cursor: "pointer",
+                      marginLeft: "6px",
+                    }}
+                  >
+                    View more
+                  </span>
+                )}
+              </h3>
 
+              {/* Description  */}
+              <p>
+                <strong>Description:</strong>{" "}
+                {truncateText(
+                  blog.description || "No description available.",
+                  60
+                )}
+                {(blog.description?.length || 0) > 120 && (
+                  <span
+                    onClick={() => setActiveBlog(blog)}
+                    style={{
+                      color: "#007bff",
+                      cursor: "pointer",
+                      marginLeft: "6px",
+                    }}
+                  >
+                    View more
+                  </span>
+                )}
+              </p>
+
+              {/* Buttons  */}
               <div className={styles.buttons}>
                 <button onClick={() => handleLike(blog._id)}>
                   👍 Like ({likes[blog._id] || 0})
@@ -173,6 +195,7 @@ const LatestBlogs = ({ setActiveBlog, user }) => {
                 </button>
               </div>
 
+              {/* Comments  */}
               {expandedBlogId === blog._id && (
                 <div style={{ marginTop: "1rem" }}>
                   <h4>💬 Comments</h4>
@@ -188,11 +211,7 @@ const LatestBlogs = ({ setActiveBlog, user }) => {
                         {c.timestamp && (
                           <small style={{ color: "#999" }}>
                             {" "}
-                            (
-                            {new Date(
-                              c.timestamp
-                            ).toLocaleString()}
-                            )
+                            ({new Date(c.timestamp).toLocaleString()})
                           </small>
                         )}
 
@@ -235,9 +254,7 @@ const LatestBlogs = ({ setActiveBlog, user }) => {
                       marginRight: "0.5rem",
                     }}
                   />
-                  <button
-                    onClick={() => handleAddComment(blog._id)}
-                  >
+                  <button onClick={() => handleAddComment(blog._id)}>
                     Post
                   </button>
                 </div>
