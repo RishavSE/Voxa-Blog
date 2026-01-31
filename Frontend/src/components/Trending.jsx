@@ -127,6 +127,11 @@ const Trending = ({ setActiveBlog, user }) => {
               {blog.title.length > 50 && (
                 <span
                   onClick={() => setActiveBlog(blog)}
+                  style={{
+                      color: "#007bff",
+                      cursor: "pointer",
+                      marginLeft: "6px",
+                    }}
                   className={styles.viewMore}
                 >
                   {" "}View more
@@ -144,6 +149,11 @@ const Trending = ({ setActiveBlog, user }) => {
               {(blog.description?.length || 0) > 120 && (
                 <span
                   onClick={() => setActiveBlog(blog)}
+                  style={{
+                      color: "#007bff",
+                      cursor: "pointer",
+                      marginLeft: "6px",
+                    }}
                   className={styles.viewMore}
                 >
                   {" "}View more
