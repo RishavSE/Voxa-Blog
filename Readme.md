@@ -36,6 +36,7 @@ Link: 👉    https://drive.google.com/file/d/1Mc-TWqcONFHcl58lM9fvHko6fHXyWRS2/
   - View all published blogs
   - Like  any blog
   - Add comments to others' posts
+  - Delete your own comments
 - Real-time count of likes and comments visible to all
 
 ### 🎨 User Interface
