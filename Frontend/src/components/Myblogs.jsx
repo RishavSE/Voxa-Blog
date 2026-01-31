@@ -119,6 +119,7 @@ const MyBlogs = () => {
         onChange={handleFileChange}
         style={{ marginBottom: "1rem" }}
       />
+      <br></br>
 
       {mediaPreviewUrl && (
         <div style={{ position: "relative", marginBottom: "1rem" }}>
