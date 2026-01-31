@@ -1,9 +1,10 @@
 .trending {
   background: #c3b9f7;
-  padding: 2rem;
-  border-radius: 0.2rem;
-  margin: 1rem;
+   margin: 2rem auto;
+  padding: 2rem 1rem;
+  
   text-align: center;
+  border-radius: 10px;
 }
 
 .trending h2 {
@@ -48,7 +49,7 @@
   border-radius: 0.5rem;
 }
 
-/* Buttons at bottom */
+
 .buttons {
   margin-top: auto;   
   display: flex;
