@@ -18,6 +18,12 @@
   justify-content: center;
 }
 
+.card p {
+  color: #444;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  min-height: 60px;
+}
 
 .card {
    display: flex;
