@@ -13,7 +13,7 @@ const Trending = ({ setActiveBlog, user }) => {
   const truncateText = (text = "", limit = 100) =>
     text.length > limit ? text.slice(0, limit) + "..." : text;
 
-  // Fetch blogs
+  
   useEffect(() => {
     API.get('/blogs')
       .then((res) => {
