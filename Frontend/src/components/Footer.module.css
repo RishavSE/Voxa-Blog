@@ -33,6 +33,10 @@
   margin: 0.3rem 0;
   color: hotpink;
 }
+.footerLinks a {
+  margin: 0.3rem 0;
+  color: hotpink;
+}
 
 /* Responsive */
 @media (max-width: 768px) {
