@@ -20,7 +20,7 @@ function Footer({ className = "" }) {
       <div className={styles.footerLinks}>
         <h4>Quick Links</h4>
         <a href="#">Home</a><br />
-        <a href="MyBlogs">Create Blogs</a><br />
+        <a href="#">Create Blogs</a><br />
         <a href="#">My Blogs</a>
       </div>
 
