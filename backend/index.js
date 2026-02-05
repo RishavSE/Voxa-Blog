@@ -12,19 +12,19 @@ const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
+
+app.get("/", (req, res) => {
+  res.status(200).send("OK");
+});
+
 app.use("/api", authRoutes);
 app.use("/api/blogs", blogRoutes);
 
-
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
 
 mongoose
-  .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(process.env.MONGO_URI)
   .then(() => {
     console.log("✅ MongoDB Connected");
-    app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
   })
   .catch((err) => console.error("❌ MongoDB connection failed:", err));
-
-  
-require("dotenv").config();
-console.log("Loaded ENV:", process.env.CLOUDINARY_API_KEY);
