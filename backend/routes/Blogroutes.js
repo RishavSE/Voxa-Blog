@@ -2,12 +2,12 @@ const express = require("express");
 const multer = require("multer");
 const { cloudinary } = require("../utils/Cloudnary");
 const Blog = require("../models/Blogs");
-const { v4: uuidv4 } = require("uuid"); // for comment IDs
+const { v4: uuidv4 } = require("uuid"); 
 
 const router = express.Router();
 const upload = multer({ storage: multer.memoryStorage() });
 
-// ✅ GET all blogs (optionally filter by user email)
+
 router.get("/", async (req, res) => {
   try {
     const { email } = req.query;
@@ -19,7 +19,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-// ✅ POST a new blog
+
 router.post("/", upload.single("media"), async (req, res) => {
   try {
     let mediaUrl = null;
@@ -53,7 +53,7 @@ router.post("/", upload.single("media"), async (req, res) => {
   }
 });
 
-// ✅ POST /blogs/:id/like → like a blog post
+
 router.post("/:id/like", async (req, res) => {
   try {
     const { userId } = req.body;
@@ -74,7 +74,7 @@ router.post("/:id/like", async (req, res) => {
   }
 });
 
-// ✅ POST /blogs/:id/comment → add comment
+
 router.post("/:id/comment", async (req, res) => {
   try {
     console.log("🔵 Comment POST body:", req.body);
@@ -105,7 +105,7 @@ router.post("/:id/comment", async (req, res) => {
   }
 });
 
-// ✅ DELETE /blogs/:id/comment/:commentId → delete comment
+
 router.delete("/:id/comment/:commentId", async (req, res) => {
   try {
     const { userId } = req.query; 
@@ -136,7 +136,7 @@ router.delete("/:id/comment/:commentId", async (req, res) => {
   }
 });
 
-// ✅ PUT /blogs/:id → update blog
+
 router.put("/:id", async (req, res) => {
   try {
     const { title, description, content } = req.body;
@@ -160,7 +160,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-// ✅ DELETE /blogs/:id → delete blog
+
 router.delete("/:id", async (req, res) => {
   try {
     const blog = await Blog.findByIdAndDelete(req.params.id);
