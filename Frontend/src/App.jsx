@@ -17,7 +17,7 @@ function App() {
   const [activeBlog, setActiveBlog] = useState(null);
   const [user, setUser] = useState(null);
 
-  // ✅ Restore user from localStorage if already logged in
+  
   useEffect(() => {
     const token = localStorage.getItem("token");
     const email = localStorage.getItem("userEmail");
@@ -29,7 +29,7 @@ function App() {
     }
   }, []);
 
-  // ✅ On successful login
+  
   const handleLoginSuccess = (email, role, token) => {
     const name = email.split("@")[0];
     setUser({ name, email, role });
@@ -43,7 +43,7 @@ function App() {
     setShowMyBlogs(true);
   };
 
-  // ✅ Logout handler
+  
   const handleLogout = () => {
     localStorage.clear();
     setUser(null);
@@ -89,7 +89,7 @@ function App() {
         }}
       />
 
-      {/* ✅ Auth Screens */}
+      {/*  Auth Screens */}
       {showLogin && (
         <LoginPage
           onClose={() => setShowLogin(false)}
@@ -106,11 +106,11 @@ function App() {
 }} />}
 
 
-      {/* ✅ Dashboard Screens */}
+      {/*  Dashboard Screens */}
       {showWriteBlog && user && <MyBlogs user={user} />}
       {showMyBlogs && user && <MyBlogs1 user={user} />}
 
-      {/* ✅ Homepage */}
+      {/*  Homepage */}
       {!showLogin && !showSignup && !showMyBlogs && !showWriteBlog && (
         <>
           <Trending setActiveBlog={setActiveBlog} user={user} />
@@ -118,12 +118,12 @@ function App() {
         </>
       )}
 
-      {/* ✅ Modal for View More */}
+      {/*  Modal for View More */}
       {activeBlog && (
         <BlogModal blog={activeBlog} onClose={() => setActiveBlog(null)} user={user} />
       )}
 
-      {/* ✅ Hide footer when modal is active */}
+      {/*  Hide footer when modal is active */}
       {!activeBlog && <Footer />}
     </div>
   );
