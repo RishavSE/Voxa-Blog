@@ -7,7 +7,7 @@ const BlogModal = ({ blog, onClose, user }) => {
   const [commentText, setCommentText] = useState("");
   const [comments, setComments] = useState(blog.comments || []);
 
-  //  Render Lexical JSON content
+  
   const renderContent = (content) => {
     if (!content?.root?.children) return null;
 
