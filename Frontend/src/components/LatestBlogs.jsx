@@ -13,7 +13,7 @@ const LatestBlogs = ({ setActiveBlog, user }) => {
   const truncateText = (text = "", limit = 100) =>
     text.length > limit ? text.slice(0, limit) + "..." : text;
 
-  // Fetch blogs
+ 
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
