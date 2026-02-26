@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './Footer.module.css';
 import { FaFacebookF, FaLinkedinIn, FaYoutube, FaInstagram } from 'react-icons/fa';
 
-//  Accept className as a prop
+
 function Footer({ className = "" }) {
   return (
     <footer className={`animate__animated animate__fadeInUp ${styles.footer} ${className}`}>
