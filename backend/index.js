@@ -20,11 +20,11 @@ app.get("/", (req, res) => {
 app.use("/api", authRoutes);
 app.use("/api/blogs", blogRoutes);
 
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(` Server running on port ${PORT}`));
 
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
-    console.log("✅ MongoDB Connected");
+    console.log(" MongoDB Connected");
   })
   .catch((err) => console.error("❌ MongoDB connection failed:", err));
