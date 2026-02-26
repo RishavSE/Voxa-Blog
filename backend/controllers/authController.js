@@ -2,26 +2,24 @@ const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-// @route   POST /register
-// @desc    Register user
-// @access  Public
+
 exports.register = async (req, res) => {
   const { email, password, role } = req.body;
 
   try {
-    // Check if user already exists
+   
     const existingUser = await User.findOne({ email });
     if (existingUser)
       return res.status(400).json({ message: "User already exists" });
 
-    // Hash password
+    
     const hashedPassword = await bcrypt.hash(password.trim(), 10);
 
-    // Create new user
+   
     const newUser = new User({
       email,
       password: hashedPassword,
-      role: role || "user", // Default to "user" if not provided
+      role: role || "user", 
     });
 
     await newUser.save();
@@ -33,9 +31,7 @@ exports.register = async (req, res) => {
   }
 };
 
-// @route   POST /reset-password
-// @desc    Reset user password
-// @access  Public
+
 exports.resetPassword = async (req, res) => {
   const { email, newPassword } = req.body;
 
@@ -56,35 +52,33 @@ exports.resetPassword = async (req, res) => {
   }
 };
 
-// @route   POST /login
-// @desc    Login user
-// @access  Public
+
 exports.login = async (req, res) => {
   const { email, password, role } = req.body;
 
   try {
-    // Find user with email and role
+   
     const user = await User.findOne({ email, role });
     if (!user)
       return res
         .status(404)
         .json({ message: "Invalid credentials (email or role mismatch)" });
 
-    // Compare password
+   
     const isMatch = await bcrypt.compare(password.trim(), user.password);
     if (!isMatch)
       return res.status(400).json({ message: "Invalid credentials" });
 
     user.lastLogin = new Date();
     await user.save();
-    // Generate JWT
+   
     const token = jwt.sign(
       { id: user._id, email: user.email, role: user.role },
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
 
-    // Return response
+   
     res.status(200).json({
       token,
       email: user.email,
