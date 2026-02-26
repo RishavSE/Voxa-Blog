@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 
 const commentSchema = new mongoose.Schema({
-  userId: { type: String, required: true },   // user email or MongoDB _id
-  userName: { type: String, required: true }, // display name
+  userId: { type: String, required: true },   
+  userName: { type: String, required: true }, 
   text: { type: String, required: true },
   timestamp: { type: Date, default: Date.now }
 });
@@ -12,13 +12,13 @@ const blogSchema = new mongoose.Schema({
   description: String,
   content: Object,
   mediaUrl: String,
-  email: String, // blog owner email
+  email: String, 
   createdAt: { type: Date, default: Date.now },
 
-  // ✅ New fields
+ 
   likes: { type: Number, default: 0 },
-  likedUsers: [String], // optional: user IDs/emails who liked to prevent duplicates
-  comments: [commentSchema] // embedded subdocument array
+  likedUsers: [String], 
+  comments: [commentSchema] 
 });
 
 module.exports = mongoose.model("Blog", blogSchema);
