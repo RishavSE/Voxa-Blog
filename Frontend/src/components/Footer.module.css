@@ -1,7 +1,8 @@
 .footer {
   background: #f9f9f9;
-  padding: 2rem;
+  /* padding: 2rem; */
   display: flex;
+  align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   margin-top: 2rem;
@@ -34,6 +35,7 @@
   color: hotpink;
 }
 .footerLinks a {
+  /* display: block; */
   margin: 0.3rem 0;
   color: hotpink;
 }
@@ -48,4 +50,10 @@
   .footerLeft, .footerLinks, .footerInfo {
     margin: 1rem 0;
   }
+}
+.footerLinks span {
+  cursor: pointer;
+  display: inline-block;
+  pointer-events: auto;
+  z-index: 10;
 }
