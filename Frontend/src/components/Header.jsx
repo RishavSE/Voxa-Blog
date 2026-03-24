@@ -16,7 +16,7 @@ function Header({
     <header className={styles.header}>
       <div className={styles.logo}>VoxaBlog</div>
 
-      {/* Hamburger */}
+     
       <div
         className={styles.hamburger}
         onClick={() => setMenuOpen(!menuOpen)}
@@ -24,54 +24,64 @@ function Header({
         <FaBars />
       </div>
 
-      {/* Nav */}
-      <nav
-        className={`${styles.nav} ${menuOpen ? styles.menuOpen : ""}`}
-      >
-        <span
-          className={styles.navLink}
-          onClick={() => {
-            onHomeClick();
-            setMenuOpen(false);
-          }}
-        >
+    
+      <nav className={styles.desktopNav}>
+        <span className={styles.navLink} onClick={onHomeClick}>
           Home
         </span>
-
-        <span
-          className={styles.navLink}
-          onClick={() => {
-            onWriteBlogClick();
-            setMenuOpen(false);
-          }}
-        >
+        <span className={styles.navLink} onClick={onWriteBlogClick}>
           Create Blogs
         </span>
-
-        <span
-          className={styles.navLink}
-          onClick={() => {
-            onMyBlogsClick();
-            setMenuOpen(false);
-          }}
-        >
+        <span className={styles.navLink} onClick={onMyBlogsClick}>
           My Blogs
         </span>
       </nav>
 
-      {/* User Section */}
+      
+    <div className={styles.desktopUser}>
+  {user ? (
+    <>
+      <div className={styles.userInfo}>
+        <span className={styles.userName}>{user.name}</span>
+        <span className={styles.userRole}>
+          (Role: {user.role})
+        </span>
+      </div>
+
+      <button onClick={onLogout} className={styles.loginBtn}>
+        Logout
+      </button>
+    </>
+  ) : (
+    <button onClick={onLoginClick} className={styles.loginBtn}>
+      Log in / Sign up
+    </button>
+  )}
+</div>
+
+
+      
       <div
-        className={`${styles.userSection} ${
+        className={`${styles.mobileMenu} ${
           menuOpen ? styles.menuOpen : ""
         }`}
       >
+        <span onClick={() => { onHomeClick(); setMenuOpen(false); }}>
+          Home
+        </span>
+        <span onClick={() => { onWriteBlogClick(); setMenuOpen(false); }}>
+          Create Blogs
+        </span>
+        <span onClick={() => { onMyBlogsClick(); setMenuOpen(false); }}>
+          My Blogs
+        </span>
+
+        <hr className={styles.divider} />
+
         {user ? (
           <>
             <div className={styles.userInfo}>
-              <span className={styles.userName}>{user.name}</span>
-              <span className={styles.userRole}>
-                (Role: {user.role})
-              </span>
+              {user.name} <span>(Role: {user.role})</span>
             </div>
             <button
               onClick={() => {
