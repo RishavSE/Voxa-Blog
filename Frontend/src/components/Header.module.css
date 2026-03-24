@@ -4,6 +4,8 @@
   align-items: center;
   padding: 1rem;
   position: relative;
+  background: white;
+  z-index: 1000;
 }
 
 .logo {
@@ -12,15 +14,14 @@
 }
 
 
-.nav {
+.desktopNav {
   display: flex;
-  align-items: center;
+  gap: 20px;
 }
 
 .navLink {
-  margin: 0 1rem;
-  text-decoration: none;
   color: hotpink;
+  cursor: pointer;
   transition: 0.3s;
 }
 
@@ -29,27 +30,10 @@
 }
 
 
-.active {
-  color: hotpink;
-  font-weight: bold;
-}
-
-/* USER */
-.userSection {
+.desktopUser {
   display: flex;
   align-items: center;
-  gap: 1rem;
-}
-
-.userInfo {
-  font-weight: 600;
-  color: #333;
-}
-
-.userRole {
-  font-style: italic;
-  color: hotpink;
-  margin-left: 0.3rem;
+  gap: 10px;
 }
 
 .loginBtn {
@@ -61,6 +45,10 @@
   cursor: pointer;
 }
 
+.userName {
+  font-weight: 600;
+}
+
 
 .hamburger {
   display: none;
@@ -69,37 +57,56 @@
 }
 
 
+.mobileMenu {
+  display: none;
+}
+
+
+.divider {
+  width: 80%;
+  border: 0.5px solid #ddd;
+}
+
+.userRole {
+  color: hotpink;      
+  font-style: italic;
+  font-size: 0.85rem;
+  margin-left: 5px;
+}
+
+
 @media (max-width: 768px) {
+  .desktopNav,
+  .desktopUser {
+    display: none;
+  }
+
   .hamburger {
     display: block;
   }
 
-  .nav {
+  .mobileMenu {
     position: absolute;
-    top: 60px;
+    top: 100%;
     left: 0;
     width: 100%;
     background: white;
     flex-direction: column;
     align-items: center;
-    display: none;
-    padding: 1rem 0;
+    padding: 1.5rem 0;
+    gap: 1rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   }
 
-  .navLink {
-    margin: 10px 0;
+  .mobileMenu span {
+    font-size: 1.1rem;
+    cursor: pointer;
+    color: hotpink;
   }
 
-  .userSection {
-    position: absolute;
-    top: 180px;
-    left: 0;
-    width: 100%;
-    background: white;
-    flex-direction: column;
-    align-items: center;
-    display: none;
-    padding-bottom: 1rem;
+  .userInfo {
+    text-align: center;
+    font-weight: 600;
   }
 
   .menuOpen {
