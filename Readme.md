@@ -70,7 +70,7 @@ The editor includes essential formatting tools and supports uploading images and
 |------------|------------------------------|
 | MongoDB    | NoSQL database               |
 | Express.js | API backend framework        |
-| React.js   | Frontend framework (Vite)    |
+| React.js   | Frontend framework     |
 | Node.js    | Runtime environment          |
 | JWT        | Auth token system            |
 | Bcrypt     | Password encryption          |
