@@ -57,22 +57,39 @@ router.post("/", upload.single("media"), async (req, res) => {
 router.post("/:id/like", async (req, res) => {
   try {
     const { userId } = req.body;
-    const blog = await Blog.findById(req.params.id);
-    if (!blog) return res.status(404).json({ error: "Blog not found" });
 
-    if (blog.likedUsers.includes(userId)) {
-      return res.status(400).json({ error: "Already liked" });
+    const blog = await Blog.findById(req.params.id);
+    if (!blog) {
+      return res.status(404).json({ error: "Blog not found" });
     }
 
-    blog.likes += 1;
-    blog.likedUsers.push(userId);
+    const alreadyLiked = blog.likedUsers.includes(userId);
+
+    if (alreadyLiked) {
+      
+      blog.likedUsers = blog.likedUsers.filter(
+        (id) => id.toString() !== userId
+      );
+      blog.likes -= 1;
+    } else {
+     
+      blog.likedUsers.push(userId);
+      blog.likes += 1;
+    }
+
     await blog.save();
-    res.json({ likes: blog.likes });
+
+    res.json({
+      liked: !alreadyLiked,
+      likes: blog.likes,
+    });
+
   } catch (err) {
     console.error("POST /blogs/:id/like error:", err);
     res.status(500).json({ error: "Failed to like blog" });
   }
 });
+
 
 
 router.post("/:id/comment", async (req, res) => {

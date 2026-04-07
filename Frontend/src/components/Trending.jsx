@@ -1,234 +1,161 @@
-import React, { useEffect, useState } from 'react';
-import styles from './Trending.module.css';
-import API from '../api';
+import React, { useState } from "react";
+import styles from "./LatestBlogs.module.css";
 
-const Trending = ({ setActiveBlog, user }) => {
-  const [blogs, setBlogs] = useState([]);
-  const [likes, setLikes] = useState({});
-  const [comments, setComments] = useState({});
+const TrendingBlogs = ({
+  blogs,
+  setActiveBlog,
+  user,
+  handleLike,
+  handleAddComment,
+  handleDeleteComment,
+}) => {
   const [expandedBlogId, setExpandedBlogId] = useState(null);
   const [commentText, setCommentText] = useState({});
 
-  
   const truncateText = (text = "", limit = 100) =>
     text.length > limit ? text.slice(0, limit) + "..." : text;
 
-  
-  useEffect(() => {
-    API.get('/blogs')
-      .then((res) => {
-        const sorted = res.data
-          .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-          .slice(0, 3);
-
-        setBlogs(sorted);
-
-        const likeMap = {};
-        const commentMap = {};
-
-        sorted.forEach(blog => {
-          likeMap[blog._id] = blog.likes || 0;
-          commentMap[blog._id] = blog.comments || [];
-        });
-
-        setLikes(likeMap);
-        setComments(commentMap);
-      })
-      .catch(err => console.error("Failed to fetch blogs:", err));
-  }, []);
-
-  
-  const handleLike = async (id) => {
-    if (!user) {
-      alert("Please login to like the blog.");
-      return;
-    }
-
-    try {
-      const res = await API.post(`/blogs/${id}/like`, {
-        userId: user.email,
-      });
-      setLikes(prev => ({ ...prev, [id]: res.data.likes }));
-    } catch (err) {
-      alert(err.response?.data?.error || "Already liked.");
-    }
+  const renderMedia = (mediaUrl = "") => {
+    if (!mediaUrl) return null;
+    const isVideo = mediaUrl.endsWith(".mp4") || mediaUrl.includes("video");
+    return isVideo ? (
+      <video
+        src={mediaUrl}
+        controls
+        className={styles.media}
+        style={{ borderRadius: "8px", margin: "1rem 0", width: "100%" }}
+      />
+    ) : (
+      <img
+        src={mediaUrl}
+        alt="Blog"
+        className={styles.media}
+        style={{ borderRadius: "8px", margin: "1rem 0", width: "100%" }}
+      />
+    );
   };
 
- 
-  const handleAddComment = async (id) => {
-    if (!user) {
-      alert("Please login to comment.");
-      return;
-    }
-
-    const text = commentText[id]?.trim();
-    if (!text) return;
-
-    try {
-      const res = await API.post(`/blogs/${id}/comment`, {
-        userId: user.email,
-        userName: user.name,
-        text,
-      });
-
-      setComments(prev => ({
-        ...prev,
-        [id]: [...(prev[id] || []), res.data],
-      }));
-
-      setCommentText(prev => ({ ...prev, [id]: "" }));
-    } catch (err) {
-      alert("Failed to add comment.");
-    }
-  };
-
-  
-  const handleDeleteComment = async (blogId, commentId) => {
-    if (!user) return;
-
-    try {
-      await API.delete(
-        `/blogs/${blogId}/comment/${commentId}?userId=${user.email}`
-      );
-
-      setComments(prev => ({
-        ...prev,
-        [blogId]: prev[blogId].filter(c => c._id !== commentId),
-      }));
-    } catch (err) {
-      alert("Failed to delete comment.");
-    }
-  };
+  const latestBlogs = [...blogs]
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+    .slice(0, 3);
 
   return (
-    <section className={`animate__animated animate__fadeInUp ${styles.trending}`}>
+    <div className={styles.latest}>
       <h2>🔥 Trending Blogs</h2>
 
       <div className={styles.cards}>
-        {blogs.map(blog => (
-          <div key={blog._id} className={styles.card}>
-            {/* Media */}
-            {blog.mediaUrl ? (
-              blog.mediaUrl.endsWith(".mp4") ? (
-                <video src={blog.mediaUrl} controls />
-              ) : (
-                <img src={blog.mediaUrl} alt="Blog" />
-              )
-            ) : (
-              <img
-                src="https://via.placeholder.com/600x400?text=No+Image"
-                alt="No Media"
-              />
-            )}
+        {latestBlogs.map((blog) => {
+          const liked = user && blog.likedUsers?.includes(user.email);
+          const likes = blog.likes || 0;
 
-            {/* Title */}
-            <h3>
-              {truncateText(blog.title, 50)}
-              {blog.title.length > 50 && (
-                <span
-                  onClick={() => setActiveBlog(blog)}
-                  style={{
-                      color: "#007bff",
-                      cursor: "pointer",
-                      marginLeft: "6px",
+          return (
+            <div key={blog._id} className={styles.cardWrapper}>
+              <div className={styles.card}>
+                {renderMedia(blog.mediaUrl)}
+
+                <h3>
+                  {truncateText(blog.title, 50)}
+                  {blog.title.length > 50 && (
+                    <span
+                      onClick={() => setActiveBlog(blog)}
+                      className={styles.viewMore}
+                    >
+                      View more
+                    </span>
+                  )}
+                </h3>
+
+                <p>
+                  <strong>Description:</strong>{" "}
+                  {truncateText(blog.description || "No description", 60)}
+                </p>
+
+                <div className={styles.buttons}>
+                  <button
+                    onClick={() => handleLike(blog._id)}
+                    className={`${styles.likeBtn} ${liked ? styles.liked : ""}`}
+                  >
+                    <span
+                      className={`${styles.heart} ${liked ? styles.pop : ""}`}
+                    >
+                      {liked ? "❤️" : "🤍"}
+                    </span>{" "}
+                    {likes}
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      if (!user) return alert("Login to comment");
+                      setExpandedBlogId(
+                        expandedBlogId === blog._id ? null : blog._id,
+                      );
                     }}
-                  className={styles.viewMore}
-                >
-                  {" "}View more
-                </span>
-              )}
-            </h3>
+                  >
+                    💬 Comment
+                  </button>
 
-            {/* Description */}
-            <p>
-              <strong>Description:</strong>{" "}
-              {truncateText(
-                blog.description || "No description available.",
-                60
-              )}
-              {(blog.description?.length || 0) > 120 && (
-                <span
-                  onClick={() => setActiveBlog(blog)}
-                  style={{
-                      color: "#007bff",
-                      cursor: "pointer",
-                      marginLeft: "6px",
-                    }}
-                  className={styles.viewMore}
-                >
-                  {" "}View more
-                </span>
-              )}
-            </p>
+                  <button onClick={() => setActiveBlog(blog)}>👁️ View</button>
+                </div>
 
-            {/* Buttons */}
-            <div className={styles.buttons}>
-              <button onClick={() => handleLike(blog._id)}>
-                👍 Like ({likes[blog._id] || 0})
-              </button>
+                {expandedBlogId === blog._id && (
+                  <div className={styles.commentBox}>
+                    <h4>💬 Comments</h4>
 
-              <button
-                onClick={() => {
-                  if (!user) return alert("Please login to comment.");
-                  setExpandedBlogId(blog._id);
-                }}
-              >
-                💬 Comment
-              </button>
+                    <ul>
+                      {(blog.comments || []).map((c) => (
+                        <li key={c._id} className={styles.commentItem}>
+                          <strong>{c.userName || c.user}:</strong> {c.text}
+                          {user?.email === c.userId && handleDeleteComment && (
+                            <button
+                              onClick={() =>
+                                handleDeleteComment(blog._id, c._id)
+                              }
+                              className={styles.deleteBtn}
+                            >
+                              🗑️
+                            </button>
+                          )}
+                        </li>
+                      ))}
+                    </ul>
 
-              <button onClick={() => setActiveBlog(blog)}>
-                👁️ View More
-              </button>
-            </div>
-
-            {/* Comments */}
-            {expandedBlogId === blog._id && (
-              <div className={styles.commentBox}>
-                <h4>💬 Comments</h4>
-
-                <ul>
-                  {(comments[blog._id] || []).map(c => (
-                    <li key={c._id}>
-                      <strong>{c.userName || c.user}:</strong> {c.text}
-                      <small>
-                        {" "}({new Date(c.timestamp).toLocaleString()})
-                      </small>
-
-                      {user?.email === c.userId && (
-                        <button
-                          onClick={() =>
-                            handleDeleteComment(blog._id, c._id)
-                          }
-                          className={styles.deleteBtn}
-                        >
-                          🗑️
-                        </button>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-
-                <input
-                  type="text"
-                  placeholder="Write a comment..."
-                  value={commentText[blog._id] || ""}
-                  onChange={(e) =>
-                    setCommentText(prev => ({
-                      ...prev,
-                      [blog._id]: e.target.value,
-                    }))
-                  }
-                />
-                <button onClick={() => handleAddComment(blog._id)}>
-                  Post
-                </button>
+                    <div className={styles.commentInputWrapper}>
+                      <input
+                        type="text"
+                        placeholder="Write a comment..."
+                        value={commentText[blog._id] || ""}
+                        onChange={(e) =>
+                          setCommentText((prev) => ({
+                            ...prev,
+                            [blog._id]: e.target.value,
+                          }))
+                        }
+                        className={styles.commentInput}
+                      />
+                      <button
+                        onClick={() => {
+                          const text = (commentText[blog._id] || "").trim();
+                          if (!text) return;
+                          handleAddComment(blog._id, text);
+                          setCommentText((prev) => ({
+                            ...prev,
+                            [blog._id]: "",
+                          }));
+                        }}
+                        className={styles.commentBtn}
+                      >
+                        Post
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-        ))}
+            </div>
+          );
+        })}
       </div>
-    </section>
+    </div>
   );
 };
 
-export default Trending;
+export default TrendingBlogs;

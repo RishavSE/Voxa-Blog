@@ -3,7 +3,7 @@
   padding: 2rem 1rem;
   background: #eae6ff;
   text-align: center;
-  border-radius: 10px;
+  border-radius: 12px;
 }
 
 .latest h2 {
@@ -23,16 +23,15 @@
   flex-direction: column;
   justify-content: space-between;
   background: white;
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 1rem;
   width: 320px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  transition: transform 0.2s ease;
-  height: 100%;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
 }
 
 .cardWrapper:hover {
-  transform: translateY(-5px);
+  transform: translateY(-8px) scale(1.02);
 }
 
 .card {
@@ -41,18 +40,13 @@
   align-items: flex-start;
 }
 
-.card img {
-  width: 100%;
-  height: 300px;
-  object-fit: inherit;
-  border-radius: 0.5rem;
-}
-
+.card img,
 .card video {
   width: 100%;
   height: 300px;
   object-fit: inherit;
   border-radius: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 .card h3 {
@@ -65,39 +59,137 @@
   font-size: 0.95rem;
   line-height: 1.4;
   min-height: 60px;
-}
-
-.cardBottom {
-  margin-top: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 .buttons {
   display: flex;
-  gap: 0.5rem;
-  flex-wrap: wrap;
   justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  gap: 0.5rem;
 }
 
 .buttons button {
-  flex: 1;
-  background: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 25px;
+  background: #f5f5f5;
   border: none;
-  padding: 0.4rem 0.8rem;
-  border-radius: 4px;
   cursor: pointer;
-  font-weight: bold;
+  font-weight: 600;
   color: #333;
-  transition: background 0.2s;
+  transition: all 0.25s ease;
+  min-width: 80px;
 }
 
 .buttons button:hover {
-  background: #e2e2e2;
+  background: #e8e8e8;
+  transform: scale(1.05);
 }
 
+.likeBtn {
+  background: #fff;
+  border: 1px solid #ddd;
+}
 
-.styles.buttons {
+.likeBtn:hover {
+  background: #ffe6e6;
+}
+
+.liked {
+  background: #ffe6e6;
+  border: 1px solid #ff4d4d;
+  color: #ff1a1a;
+}
+
+.heart {
+  font-size: 18px;
+  transition: transform 0.3s ease;
+}
+
+.liked .heart {
+  animation: pop 0.3s ease;
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.viewMore {
+  color: #007bff;
+  font-weight: 500;
+  margin-top: 1rem;
+  display: inline-block;
+}
+
+.viewMore:hover {
+  text-decoration: underline;
+}
+
+.commentBox {
+  margin-top: 1rem;
+  width: 100%;
   display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.commentBox input {
+  flex: 1;
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.commentBox button {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: none;
+  background: #007bff;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.commentBox button:hover {
+  background: #0056b3;
+}
+
+.deleteBtn {
+  margin-left: 8px;
+
+  background: white !important;
+  color: white !important;
+
+  border: none !important;
+  outline: none !important;
+
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  font-size: 14px;
+
+  padding: 0 !important;
+  line-height: 1;
+
+  box-shadow: none !important;
 }
