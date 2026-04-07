@@ -6,8 +6,6 @@ Voxalog is a feature-rich blogging platform built using the MERN stack. It enabl
 
 ---
 
-## 📸 Screenshots
-Link: 👉    https://drive.google.com/file/d/1Mc-TWqcONFHcl58lM9fvHko6fHXyWRS2/view?usp=sharing
 
 ## 🚀 Features Implemented
 
