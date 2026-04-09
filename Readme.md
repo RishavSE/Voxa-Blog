@@ -1,4 +1,16 @@
-<h1 align="center">🎥 Voxalog 📹</h1> <p align="center"> <b>Create. Share. Engage.</b> </p> <p align="center"> <img src="https://img.shields.io/badge/Frontend-React.js-blue?style=for-the-badge"/> <img src="https://img.shields.io/badge/Backend-Node.js-green?style=for-the-badge"/> <img src="https://img.shields.io/badge/Database-MongoDB-green?style=for-the-badge"/> <img src="https://img.shields.io/badge/Auth-JWT-orange?style=for-the-badge"/> <img src="https://img.shields.io/badge/Security-Bcrypt-red?style=for-the-badge"/> <img src="https://img.shields.io/badge/API-Axios-blue?style=for-the-badge"/> <img src="https://img.shields.io/badge/Status-Active-success?style=for-the-badge"/> </p> <p align="center"> A modern full-stack blogging platform enabling users to create rich content, interact socially, and manage their digital presence seamlessly. </p>
+<h1 align="center">🎥 Voxalog 📹</h1> <p align="center"> <b>Create. Share. Engage.</b> </p><p align="center">
+
+<img src="https://img.shields.io/badge/Frontend-React.js-blue?style=for-the-badge"/>
+<img src="https://img.shields.io/badge/Backend-Node.js-green?style=for-the-badge"/>
+<img src="https://img.shields.io/badge/Database-MongoDB-green?style=for-the-badge"/>
+<img src="https://img.shields.io/badge/Cloud-Cloudinary-blue?style=for-the-badge"/>
+<img src="https://img.shields.io/badge/Auth-JWT-orange?style=for-the-badge"/>
+<img src="https://img.shields.io/badge/Security-Bcrypt-red?style=for-the-badge"/>
+<img src="https://img.shields.io/badge/API-Axios-blue?style=for-the-badge"/>
+<img src="https://img.shields.io/badge/Status-Active-success?style=for-the-badge"/>
+
+</p>
+ <p align="center"> A modern full-stack blogging platform enabling users to create rich content, interact socially, and manage their digital presence seamlessly. </p>
 <h2 align="center">📌 Overview</h2>
 
 Voxalog is a feature-rich blogging platform built using the MERN stack, designed to provide a seamless content creation and interaction experience.
