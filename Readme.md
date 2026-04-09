@@ -108,6 +108,7 @@ Layer	Technology
 Frontend	React.js
 Backend	Node.js + Express
 Database	MongoDB
+Media Storage Cloudinary  
 Authentication	JWT
 Security	Bcrypt
 API Communication	Axios
