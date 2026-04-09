@@ -144,10 +144,11 @@ Contributions are welcome.
 
 Steps:
 
-Fork the repository
-Create a feature branch
-Commit your changes
+Fork the repository<br>
+Create a feature branch<br>
+Commit your changes<br>
 Submit a pull request
-<h2 align="center">👨‍💻 Developer</h2> <p align="center"> <b>Rishav Kumar Singh</b><br> MERN Stack Developer<br> Full Stack Builder • Problem Solver  </p>
+<h2 align="center">👨‍💻 Developer</h2> <p align="center"> <b>Rishav Kumar Singh</b><br> MERN Stack Developer<br> Full Stack Builder • Problem Solver  
+</p> <p align="center"> 📫 Email: rishavse06@gmail.com </p>
 <h2 align="center">⭐ Final Thought</h2> <p align="center"> Voxalog is built for creators who believe content should be<br><br> <b>expressive • interactive • impactful</b> </p> <p align="center"> 🎥 <b>Create. Share. Engage.</b> </p>
 <h2 align="center">📜 License</h2> <p align="center"> This project is licensed under the <b>MIT License</b> </p>
