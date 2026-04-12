@@ -52,6 +52,13 @@ img {
   border-radius: 0.5rem;
 }
 
+video {
+  width: 100%;
+  height: auto;               
+  max-height: 300px;
+  object-fit: inherit;          
+  border-radius: 0.5rem;
+}
 .content {
   color: #444;
   line-height: 1.5;
