@@ -47,7 +47,6 @@ const BlogModal = ({
   return (
     <div className="modalOverlay">
       <div className="modalContainer">
-        {/* CLOSE */}
         <button className="topCloseBtn" onClick={onClose}>
           ✖
         </button>
@@ -67,14 +66,13 @@ const BlogModal = ({
           </>
         )}
 
-        {/* CONTENT */}
+      
         <div className="content">{renderContent(blog.content)}</div>
 
        
         {user ? (
           <>
             <div className="actions">
-              {/* LIKE */}
               <button
                 onClick={() => handleLike(blog._id)}
                 className={`likeBtn ${liked ? "liked" : ""}`}
@@ -130,7 +128,6 @@ const BlogModal = ({
                         {new Date(c.timestamp).toLocaleString()}
                       </small>
 
-                      {/* ✅ DELETE BUTTON */}
                       {isOwnComment && handleDeleteComment && (
                         <button
                           onClick={() =>
