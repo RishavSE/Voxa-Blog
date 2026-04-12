@@ -87,7 +87,7 @@ const LatestBlogs = ({
                       💬 Comment
                     </button>
 
-                    {/* VIEW MODAL */}
+                   
                     <button onClick={() => setActiveBlog(blog)}>👁️ View</button>
                   </div>
 
