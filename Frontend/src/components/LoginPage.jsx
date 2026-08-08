@@ -14,7 +14,9 @@ const LoginPage = ({ onClose, onSignupClick, onLoginSuccess }) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [resetMessage, setResetMessage] = useState("");
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    if (e) e.preventDefault();
+
     try {
       const res = await API.post("/login", {
         email: emailOrName,
@@ -31,7 +33,8 @@ const LoginPage = ({ onClose, onSignupClick, onLoginSuccess }) => {
     }
   };
 
-  const handlePasswordReset = async () => {
+  const handlePasswordReset = async (e) => {
+    if (e) e.preventDefault();
     if (newPassword.trim() !== confirmPassword.trim()) {
       setResetMessage("❌ Passwords do not match");
       return;
@@ -75,6 +78,11 @@ const LoginPage = ({ onClose, onSignupClick, onLoginSuccess }) => {
           className="input-field"
           value={emailOrName}
           onChange={(e) => setEmailOrName(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleLogin(e);
+            }
+          }}
         />
 
         <label htmlFor="password" className="input-label">
@@ -87,6 +95,11 @@ const LoginPage = ({ onClose, onSignupClick, onLoginSuccess }) => {
           className="input-field"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleLogin(e);
+            }
+          }}
         />
 
         <label htmlFor="role" className="input-label">

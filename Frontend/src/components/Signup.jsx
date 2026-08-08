@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./Signup.css";
 import API from "../api";
 
-const SignupPage = ({ onBackToLogin }) => {
+const SignupPage = ({ onBackToLogin, onSignupSuccess }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -20,21 +20,25 @@ const SignupPage = ({ onBackToLogin }) => {
       setMessage("Passwords do not match.");
       return;
     }
-
     try {
-      const res = await API.post("/register", {
+      await API.post("/register", {
         name,
         email,
         password,
         role,
       });
 
-      setMessage(res.data.message);
+      onSignupSuccess();
     } catch (err) {
       setMessage("❌ " + (err.response?.data?.message || "Signup failed."));
     }
   };
-
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleSignup();
+    }
+  };
   return (
     <div className="signup-container">
       <div className="signup-box">
@@ -77,6 +81,7 @@ const SignupPage = ({ onBackToLogin }) => {
           placeholder="Re-enter Password"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
+          onKeyDown={handleKeyDown}
         />
 
         <label className="input-label">Select Role</label>

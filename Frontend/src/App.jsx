@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 
 import Header from "./components/Header";
@@ -37,13 +36,7 @@ function App() {
 
   useEffect(() => {
     scrollToTop();
-  }, [
-    showLogin,
-    showSignup,
-    showWriteBlog,
-    showMyBlogs,
-    activeBlog,
-  ]);
+  }, [showLogin, showSignup, showWriteBlog, showMyBlogs, activeBlog]);
 
   const showToast = (message, type = "success") => {
     setToast({
@@ -68,10 +61,7 @@ function App() {
         setBlogs(res.data);
       } catch (err) {
         console.error("Failed to fetch blogs:", err);
-        showToast(
-          "Failed to load blogs. Please try again.",
-          "error"
-        );
+        showToast("Failed to load blogs. Please try again.", "error");
       }
     };
 
@@ -154,9 +144,7 @@ function App() {
         const liked = blog.likedUsers?.includes(user.email);
 
         const updatedLikedUsers = liked
-          ? blog.likedUsers.filter(
-              (email) => email !== user.email
-            )
+          ? blog.likedUsers.filter((email) => email !== user.email)
           : [...(blog.likedUsers || []), user.email];
 
         const updatedLikes = liked
@@ -168,21 +156,15 @@ function App() {
           likedUsers: updatedLikedUsers,
           likes: updatedLikes,
         };
-      })
+      }),
     );
 
     if (activeBlog && activeBlog._id === blogId) {
-      const liked =
-        activeBlog.likedUsers?.includes(user.email);
+      const liked = activeBlog.likedUsers?.includes(user.email);
 
       const updatedLikedUsers = liked
-        ? activeBlog.likedUsers.filter(
-            (email) => email !== user.email
-          )
-        : [
-            ...(activeBlog.likedUsers || []),
-            user.email,
-          ];
+        ? activeBlog.likedUsers.filter((email) => email !== user.email)
+        : [...(activeBlog.likedUsers || []), user.email];
 
       const updatedLikes = liked
         ? Math.max((activeBlog.likes || 0) - 1, 0)
@@ -202,29 +184,21 @@ function App() {
     } catch (err) {
       console.error("Like failed:", err);
 
-      showToast(
-        "Failed to update like. Please try again.",
-        "error"
-      );
+      showToast("Failed to update like. Please try again.", "error");
 
       try {
         const res = await API.get("/blogs");
         setBlogs(res.data);
 
         if (activeBlog && activeBlog._id === blogId) {
-          const updatedActive = res.data.find(
-            (blog) => blog._id === blogId
-          );
+          const updatedActive = res.data.find((blog) => blog._id === blogId);
 
           if (updatedActive) {
             setActiveBlog(updatedActive);
           }
         }
       } catch (refreshError) {
-        console.error(
-          "Failed to refresh blogs:",
-          refreshError
-        );
+        console.error("Failed to refresh blogs:", refreshError);
       }
     }
   };
@@ -244,70 +218,46 @@ function App() {
     const cleanText = text?.trim();
 
     if (!cleanText) {
-      showToast(
-        "Please write a comment first.",
-        "error"
-      );
+      showToast("Please write a comment first.", "error");
       return;
     }
 
     try {
-      const res = await API.post(
-        `/blogs/${blogId}/comment`,
-        {
-          userId: user.email,
-          userName: user.name,
-          text: cleanText,
-        }
-      );
+      const res = await API.post(`/blogs/${blogId}/comment`, {
+        userId: user.email,
+        userName: user.name,
+        text: cleanText,
+      });
 
       setBlogs((prev) =>
         prev.map((blog) =>
           blog._id === blogId
             ? {
                 ...blog,
-                comments: [
-                  ...(blog.comments || []),
-                  res.data,
-                ],
+                comments: [...(blog.comments || []), res.data],
               }
-            : blog
-        )
+            : blog,
+        ),
       );
 
       if (activeBlog && activeBlog._id === blogId) {
         setActiveBlog((prev) => ({
           ...prev,
-          comments: [
-            ...(prev.comments || []),
-            res.data,
-          ],
+          comments: [...(prev.comments || []), res.data],
         }));
       }
 
-      showToast(
-        "Comment added successfully!",
-        "success"
-      );
+      showToast("Comment added successfully!", "success");
     } catch (err) {
       console.error("Comment failed:", err);
 
-      showToast(
-        "Failed to add comment. Please try again.",
-        "error"
-      );
+      showToast("Failed to add comment. Please try again.", "error");
     }
   };
 
-  const handleDeleteComment = async (
-    blogId,
-    commentId
-  ) => {
+  const handleDeleteComment = async (blogId, commentId) => {
     if (!user) {
-      showToast(
-        "Please login to delete your comment.",
-        "error"
-      );
+      showToast("Please login to delete your comment.", "error");
 
       setShowLogin(true);
       setShowSignup(false);
@@ -318,57 +268,39 @@ function App() {
     }
 
     try {
-      await API.delete(
-        `/blogs/${blogId}/comment/${commentId}`,
-        {
-          params: {
-            userId: user.email,
-          },
-        }
-      );
+      await API.delete(`/blogs/${blogId}/comment/${commentId}`, {
+        params: {
+          userId: user.email,
+        },
+      });
 
       setBlogs((prev) =>
         prev.map((blog) =>
           blog._id === blogId
             ? {
                 ...blog,
-                comments: (
-                  blog.comments || []
-                ).filter(
-                  (comment) =>
-                    comment._id !== commentId
+                comments: (blog.comments || []).filter(
+                  (comment) => comment._id !== commentId,
                 ),
               }
-            : blog
-        )
+            : blog,
+        ),
       );
 
       if (activeBlog && activeBlog._id === blogId) {
         setActiveBlog((prev) => ({
           ...prev,
-          comments: (
-            prev.comments || []
-          ).filter(
-            (comment) =>
-              comment._id !== commentId
+          comments: (prev.comments || []).filter(
+            (comment) => comment._id !== commentId,
           ),
         }));
       }
 
-      showToast(
-        "Comment deleted successfully.",
-        "success"
-      );
+      showToast("Comment deleted successfully.", "success");
     } catch (err) {
-      console.error(
-        "Delete comment failed:",
-        err
-      );
+      console.error("Delete comment failed:", err);
 
-      showToast(
-        "Failed to delete comment. Please try again.",
-        "error"
-      );
+      showToast("Failed to delete comment. Please try again.", "error");
     }
   };
 
@@ -395,10 +327,7 @@ function App() {
       return;
     }
 
-    showToast(
-      "Please login first to view your blogs.",
-      "error"
-    );
+    showToast("Please login first to view your blogs.", "error");
 
     setShowLogin(true);
     setShowSignup(false);
@@ -419,10 +348,7 @@ function App() {
       return;
     }
 
-    showToast(
-      "Please login first to write a blog.",
-      "error"
-    );
+    showToast("Please login first to write a blog.", "error");
 
     setShowLogin(true);
     setShowSignup(false);
@@ -457,15 +383,11 @@ function App() {
   };
 
   return (
-    <div
-      className={`App ${activeBlog ? "blurred" : ""}`}
-    >
+    <div className={`App ${activeBlog ? "blurred" : ""}`}>
       {toast.show && (
         <div
           className={`blog-toast ${
-            toast.type === "error"
-              ? "blog-toast-error"
-              : "blog-toast-success"
+            toast.type === "error" ? "blog-toast-error" : "blog-toast-success"
           }`}
           style={{
             position: "fixed",
@@ -479,9 +401,7 @@ function App() {
         >
           {toast.type === "error" ? "✕" : "✓"}
 
-          <span className="blog-toast-message">
-            {toast.message}
-          </span>
+          <span className="blog-toast-message">{toast.message}</span>
         </div>
       )}
 
@@ -510,47 +430,44 @@ function App() {
 
             scrollToTop();
           }}
+          onSignupSuccess={() => {
+            setShowSignup(false);
+            setShowLogin(true);
+
+            scrollToTop();
+
+            showToast("User registered successfully!", "success");
+          }}
         />
       )}
 
-      {showWriteBlog && user && (
-        <MyBlogs user={user} />
+      {showWriteBlog && user && <MyBlogs user={user} />}
+
+      {showMyBlogs && user && <MyBlogs1 user={user} />}
+
+      {!showLogin && !showSignup && !showMyBlogs && !showWriteBlog && (
+        <>
+          <Trending
+            blogs={blogs}
+            setActiveBlog={setActiveBlog}
+            user={user}
+            handleLike={handleLike}
+            handleAddComment={handleAddComment}
+            handleDeleteComment={handleDeleteComment}
+            showToast={showToast}
+          />
+
+          <LatestBlogs
+            blogs={blogs}
+            setActiveBlog={setActiveBlog}
+            user={user}
+            handleLike={handleLike}
+            handleAddComment={handleAddComment}
+            handleDeleteComment={handleDeleteComment}
+            showToast={showToast}
+          />
+        </>
       )}
-
-      {showMyBlogs && user && (
-        <MyBlogs1 user={user} />
-      )}
-
-      {!showLogin &&
-        !showSignup &&
-        !showMyBlogs &&
-        !showWriteBlog && (
-          <>
-            <Trending
-              blogs={blogs}
-              setActiveBlog={setActiveBlog}
-              user={user}
-              handleLike={handleLike}
-              handleAddComment={handleAddComment}
-              handleDeleteComment={
-                handleDeleteComment
-              }
-              showToast={showToast}
-            />
-
-            <LatestBlogs
-              blogs={blogs}
-              setActiveBlog={setActiveBlog}
-              user={user}
-              handleLike={handleLike}
-              handleAddComment={handleAddComment}
-              handleDeleteComment={
-                handleDeleteComment
-              }
-              showToast={showToast}
-            />
-          </>
-        )}
 
       {activeBlog && (
         <BlogModal
@@ -559,9 +476,7 @@ function App() {
           user={user}
           handleLike={handleLike}
           handleAddComment={handleAddComment}
-          handleDeleteComment={
-            handleDeleteComment
-          }
+          handleDeleteComment={handleDeleteComment}
           showToast={showToast}
         />
       )}
