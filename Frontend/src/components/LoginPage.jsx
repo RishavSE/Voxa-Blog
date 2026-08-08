@@ -61,9 +61,13 @@ const LoginPage = ({ onClose, onSignupClick, onLoginSuccess }) => {
     <div className="login-container">
       <h2 className="login-title">Log in here</h2>
       <div className="login-box">
-        <button className="close-btn" onClick={onClose}>✖</button>
+        <button className="close-btn" onClick={onClose}>
+          ✖
+        </button>
 
-        <label htmlFor="email" className="input-label">Email</label>
+        <label htmlFor="email" className="input-label">
+          Email
+        </label>
         <input
           type="text"
           id="email"
@@ -73,7 +77,9 @@ const LoginPage = ({ onClose, onSignupClick, onLoginSuccess }) => {
           onChange={(e) => setEmailOrName(e.target.value)}
         />
 
-        <label htmlFor="password" className="input-label">Password</label>
+        <label htmlFor="password" className="input-label">
+          Password
+        </label>
         <input
           type="password"
           id="password"
@@ -83,7 +89,9 @@ const LoginPage = ({ onClose, onSignupClick, onLoginSuccess }) => {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <label htmlFor="role" className="input-label">Select Role</label>
+        <label htmlFor="role" className="input-label">
+          Select Role
+        </label>
         <select
           id="role"
           className="input-field"
@@ -94,13 +102,17 @@ const LoginPage = ({ onClose, onSignupClick, onLoginSuccess }) => {
           <option value="admin">Admin</option>
         </select>
 
-        <button className="login-btn" onClick={handleLogin}>LOG IN</button>
+        <button className="login-btn" onClick={handleLogin}>
+          LOG IN
+        </button>
 
         {message && <p className="login-message">{message}</p>}
 
         <p className="sign-in-here" onClick={onSignupClick}>
           Don't have an account?{" "}
-          <span style={{ color: "#f25c9c", cursor: "pointer", fontWeight: "bold" }}>
+          <span
+            style={{ color: "#f25c9c", cursor: "pointer", fontWeight: "bold" }}
+          >
             Sign Up
           </span>
         </p>
@@ -112,14 +124,13 @@ const LoginPage = ({ onClose, onSignupClick, onLoginSuccess }) => {
             cursor: "pointer",
             fontSize: "0.9rem",
             marginTop: "5px",
-            marginBottom: "10px"
+            marginBottom: "10px",
           }}
         >
           Forgot Password?
         </p>
       </div>
 
-      {/* Forgot Password Modal */}
       {showForgot && (
         <div className="modal-overlay">
           <div className="modal-content">
@@ -146,8 +157,15 @@ const LoginPage = ({ onClose, onSignupClick, onLoginSuccess }) => {
               className="input-field"
             />
             <div className="modal-buttons">
-              <button onClick={handlePasswordReset} className="login-btn">Reset</button>
-              <button onClick={() => setShowForgot(false)} className="close-btn">Cancel</button>
+              <button onClick={handlePasswordReset} className="login-btn">
+                Reset
+              </button>
+              <button
+                onClick={() => setShowForgot(false)}
+                className="close-btn"
+              >
+                Cancel
+              </button>
             </div>
             {resetMessage && <p className="login-message">{resetMessage}</p>}
           </div>

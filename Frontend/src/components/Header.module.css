@@ -113,3 +113,188 @@
     display: flex !important;
   }
 }
+
+.logoutOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(5px);
+
+  animation: logoutOverlayIn 0.2s ease;
+}
+
+.logoutModal {
+  width: 100%;
+  max-width: 400px;
+
+  padding: 30px;
+
+  background: #ffffff;
+
+  border-radius: 20px;
+
+  text-align: center;
+
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.25);
+
+  animation: logoutModalIn 0.25s ease;
+}
+
+.logoutIcon {
+  width: 64px;
+  height: 64px;
+
+  margin: 0 auto 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #fef3c7;
+
+  color: #d97706;
+
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.logoutModal h3 {
+  margin: 0 0 10px;
+
+  color: #111827;
+
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.logoutModal p {
+  margin: 0 0 24px;
+
+  color: #6b7280;
+
+  font-size: 14px;
+
+  line-height: 1.6;
+}
+
+.logoutActions {
+  display: flex;
+
+  gap: 10px;
+
+  width: 100%;
+}
+
+.cancelLogout,
+.confirmLogout {
+  flex: 1;
+
+  min-height: 44px;
+
+  border-radius: 10px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.15s ease;
+}
+
+.cancelLogout {
+  border: 1px solid #d1d5db;
+
+  background: #ffffff;
+
+  color: #374151;
+}
+
+.cancelLogout:hover {
+  background: #f3f4f6;
+}
+
+.confirmLogout {
+  border: none;
+
+  background: #dc2626;
+
+  color: #ffffff;
+}
+
+.confirmLogout:hover {
+  background: #b91c1c;
+}
+
+.cancelLogout:active,
+.confirmLogout:active {
+  transform: scale(0.97);
+}
+
+@keyframes logoutOverlayIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes logoutModalIn {
+  from {
+    opacity: 0;
+    transform: translateY(-15px) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 500px) {
+  .logoutOverlay {
+    padding: 16px;
+  }
+
+  .logoutModal {
+    max-width: 100%;
+
+    padding: 25px 20px;
+
+    border-radius: 18px;
+  }
+
+  .logoutIcon {
+    width: 56px;
+    height: 56px;
+
+    font-size: 26px;
+  }
+
+  .logoutModal h3 {
+    font-size: 19px;
+  }
+
+  .logoutActions {
+    gap: 8px;
+  }
+
+  .cancelLogout,
+  .confirmLogout {
+    min-height: 42px;
+  }
+}

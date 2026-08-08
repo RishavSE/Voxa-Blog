@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import './Signup.css';
-import API from '../api'; 
+import React, { useState } from "react";
+import "./Signup.css";
+import API from "../api";
 
 const SignupPage = ({ onBackToLogin }) => {
-  const [name, setName] = useState(""); 
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [role, setRole] = useState("user"); // default role
+  const [role, setRole] = useState("user");
   const [message, setMessage] = useState("");
 
   const handleSignup = async () => {
@@ -38,7 +38,9 @@ const SignupPage = ({ onBackToLogin }) => {
   return (
     <div className="signup-container">
       <div className="signup-box">
-        <button className="back-btn" onClick={onBackToLogin}>← Back to Login</button>
+        <button className="back-btn" onClick={onBackToLogin}>
+          ← Back to Login
+        </button>
         <h2 className="signup-title">Sign Up</h2>
 
         <label className="input-label">Name</label>
@@ -87,7 +89,9 @@ const SignupPage = ({ onBackToLogin }) => {
           <option value="admin">Admin</option>
         </select>
 
-        <button className="signup-btn" onClick={handleSignup}>SIGN UP</button>
+        <button className="signup-btn" onClick={handleSignup}>
+          SIGN UP
+        </button>
 
         {message && <p className="signup-message">{message}</p>}
       </div>

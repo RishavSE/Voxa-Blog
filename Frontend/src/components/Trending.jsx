@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styles from "./LatestBlogs.module.css";
+import { IoIosTrendingUp } from "react-icons/io";
 
 const TrendingBlogs = ({
   blogs,
@@ -8,6 +9,7 @@ const TrendingBlogs = ({
   handleLike,
   handleAddComment,
   handleDeleteComment,
+  showToast,
 }) => {
   const [expandedBlogId, setExpandedBlogId] = useState(null);
   const [commentText, setCommentText] = useState({});
@@ -41,7 +43,9 @@ const TrendingBlogs = ({
 
   return (
     <div className={styles.latest}>
-      <h2>🔥 Trending Blogs</h2>
+      <h2>
+        <IoIosTrendingUp /> Trending Blogs
+      </h2>
 
       <div className={styles.cards}>
         {latestBlogs.map((blog) => {
@@ -72,7 +76,14 @@ const TrendingBlogs = ({
 
                 <div className={styles.buttons}>
                   <button
-                    onClick={() => handleLike(blog._id)}
+                    onClick={() => {
+                      if (!user) {
+                        showToast("Please login to like this blog.", "error");
+                        return;
+                      }
+
+                      handleLike(blog._id);
+                    }}
                     className={`${styles.likeBtn} ${liked ? styles.liked : ""}`}
                   >
                     <span
@@ -85,7 +96,11 @@ const TrendingBlogs = ({
 
                   <button
                     onClick={() => {
-                      if (!user) return alert("Login to comment");
+                      if (!user) {
+                        showToast("Please login to comment.", "error");
+                        return;
+                      }
+
                       setExpandedBlogId(
                         expandedBlogId === blog._id ? null : blog._id,
                       );

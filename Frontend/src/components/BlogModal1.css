@@ -2,15 +2,15 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;                 
-  height: 100%;                
+  width: 100%;
+  height: 100%;
   backdrop-filter: blur(5px);
   background-color: rgba(0, 0, 0, 0.4);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  padding: 10px;               
+  padding: 10px;
   box-sizing: border-box;
 }
 
@@ -22,8 +22,8 @@
   max-width: 600px;
   max-height: 90vh;
   overflow-y: auto;
-  box-shadow: 0 0 10px rgba(0,0,0,0.3);
-  position: relative;          
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  position: relative;
 }
 
 .closeBtn,
@@ -43,20 +43,19 @@
   color: #333;
 }
 
-
 img {
   width: 100%;
-  height: auto;               
+  height: auto;
   max-height: 300px;
-  object-fit: inherit;          
+  object-fit: inherit;
   border-radius: 0.5rem;
 }
 
 video {
   width: 100%;
-  height: auto;               
+  height: auto;
   max-height: 300px;
-  object-fit: inherit;          
+  object-fit: inherit;
   border-radius: 0.5rem;
 }
 .content {
@@ -73,11 +72,10 @@ video {
   margin-bottom: 1rem;
 }
 
-
 .actions {
   margin-top: 1.5rem;
   display: flex;
-  flex-wrap: wrap;           
+  flex-wrap: wrap;
   gap: 0.8rem;
   justify-content: center;
 }
@@ -91,7 +89,7 @@ video {
   background-color: #eee;
   color: #222;
   font-weight: bold;
-  flex: 1;                   
+  flex: 1;
   min-width: 120px;
 }
 
@@ -119,17 +117,16 @@ video {
   background: #d93636;
 }
 
-
 .commentSection {
   display: flex;
-  flex-wrap: wrap;            
+  flex-wrap: wrap;
   gap: 0.5rem;
   margin-top: 1rem;
 }
 
 .commentInput {
   flex: 1;
-  min-width: 150px;         
+  min-width: 150px;
   padding: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -145,7 +142,6 @@ video {
   margin-bottom: 0.5rem;
   font-size: 0.95rem;
 }
-
 
 @media (max-width: 480px) {
   .modalContainer {
@@ -169,5 +165,96 @@ video {
   .likeBtn,
   .commentBtn {
     font-size: 13px;
+  }
+}
+
+.blogModalToast {
+  position: fixed;
+  top: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  z-index: 999999;
+
+  min-width: 280px;
+  max-width: calc(100vw - 30px);
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 14px 20px;
+
+  background: #ffffff;
+
+  border-radius: 12px;
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.18),
+    0 3px 8px rgba(0, 0, 0, 0.08);
+
+  font-size: 15px;
+  font-weight: 600;
+
+  animation: blogModalToastIn 0.3s ease;
+}
+
+.blogModalToastSuccess {
+  border-left: 5px solid #22c55e;
+  color: #166534;
+}
+
+.blogModalToastError {
+  border-left: 5px solid #ef4444;
+  color: #991b1b;
+}
+
+.blogModalToastIcon {
+  width: 27px;
+  height: 27px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.blogModalToastSuccess .blogModalToastIcon {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.blogModalToastError .blogModalToastIcon {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+@keyframes blogModalToastIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -25px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@media (max-width: 500px) {
+  .blogModalToast {
+    top: 15px;
+    width: calc(100vw - 30px);
+    min-width: 0;
+
+    padding: 13px 16px;
+
+    font-size: 14px;
   }
 }

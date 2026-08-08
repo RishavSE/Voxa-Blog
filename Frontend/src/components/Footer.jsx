@@ -1,12 +1,17 @@
 import React from "react";
-import { FaFacebookF, FaLinkedinIn, FaYoutube, FaInstagram } from "react-icons/fa";
+import {
+  FaFacebookF,
+  FaLinkedinIn,
+  FaYoutube,
+  FaInstagram,
+} from "react-icons/fa";
 
 function Footer() {
   return (
     <footer
       style={{
         width: "100%",
-        boxSizing: "border-box", 
+        boxSizing: "border-box",
         background: "linear-gradient(to right, #ffffff, #f8fafc)",
         color: "#111",
         padding: "30px 15px",
@@ -14,7 +19,7 @@ function Footer() {
         flexDirection: "column",
         alignItems: "center",
         boxShadow: "0 -2px 10px rgba(0,0,0,0.05)",
-        overflowX: "hidden", 
+        overflowX: "hidden",
       }}
     >
       <div
@@ -26,7 +31,7 @@ function Footer() {
           alignItems: "center",
           flexWrap: "wrap",
           gap: "25px",
-          boxSizing: "border-box", 
+          boxSizing: "border-box",
         }}
       >
         <div
@@ -71,7 +76,7 @@ function Footer() {
                     transition: "0.3s",
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = "translateY(-3px)"; 
+                    e.currentTarget.style.transform = "translateY(-3px)";
                     e.currentTarget.style.background = "#ff4d6d";
                     e.currentTarget.style.color = "#fff";
                   }}
@@ -83,7 +88,7 @@ function Footer() {
                 >
                   <Icon />
                 </div>
-              )
+              ),
             )}
           </div>
         </div>

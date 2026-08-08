@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./LatestBlogs.module.css";
-
+import { IoMegaphoneOutline } from "react-icons/io5";
 const LatestBlogs = ({
   blogs,
   setActiveBlog,
@@ -8,6 +8,7 @@ const LatestBlogs = ({
   handleLike,
   handleAddComment,
   handleDeleteComment,
+  showToast,
 }) => {
   const [expandedBlogId, setExpandedBlogId] = useState(null);
   const [commentText, setCommentText] = useState({});
@@ -32,7 +33,7 @@ const LatestBlogs = ({
 
   return (
     <div className={styles.latest}>
-      <h2>📚 Latest Blogs</h2>
+      <h2><IoMegaphoneOutline/> Latest Blogs</h2>
 
       <div className={styles.cards}>
         {[...blogs]
@@ -65,7 +66,14 @@ const LatestBlogs = ({
 
                   <div className={styles.buttons}>
                     <button
-                      onClick={() => handleLike(blog._id)}
+                      onClick={() => {
+                        if (!user) {
+                          showToast("Please login to like this blog.", "error");
+                          return;
+                        }
+
+                        handleLike(blog._id);
+                      }}
                       className={`${styles.likeBtn} ${liked ? styles.liked : ""}`}
                     >
                       <span
@@ -78,7 +86,10 @@ const LatestBlogs = ({
 
                     <button
                       onClick={() => {
-                        if (!user) return alert("Login to comment");
+                        if (!user) {
+                          showToast("Please login to comment.", "error");
+                          return;
+                        }
                         setExpandedBlogId(
                           expandedBlogId === blog._id ? null : blog._id,
                         );
@@ -87,7 +98,6 @@ const LatestBlogs = ({
                       💬 Comment
                     </button>
 
-                   
                     <button onClick={() => setActiveBlog(blog)}>👁️ View</button>
                   </div>
 

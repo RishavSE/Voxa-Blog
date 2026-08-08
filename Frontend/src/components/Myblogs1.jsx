@@ -9,13 +9,38 @@ const MyBlogs1 = () => {
   const [showComments, setShowComments] = useState({});
   const [commentText, setCommentText] = useState({});
   const [editingBlog, setEditingBlog] = useState(null);
+
   const [editForm, setEditForm] = useState({
     title: "",
     description: "",
     content: "",
   });
 
+  const [deleteBlog, setDeleteBlog] = useState(null);
+
+  const [toast, setToast] = useState({
+    show: false,
+    type: "",
+    message: "",
+  });
+
   const userEmail = localStorage.getItem("userEmail");
+
+  const showToast = (message, type = "success") => {
+    setToast({
+      show: true,
+      type,
+      message,
+    });
+
+    setTimeout(() => {
+      setToast({
+        show: false,
+        type: "",
+        message: "",
+      });
+    }, 3000);
+  };
 
   const fetchBlogs = async () => {
     if (!userEmail) return;
@@ -31,7 +56,7 @@ const MyBlogs1 = () => {
       res.data.forEach((blog) => {
         likeMap[blog._id] = blog.likes || 0;
         commentMap[blog._id] = blog.comments || [];
-        likedMap[blog._id] = blog.likedUsers?.includes(userEmail);
+        likedMap[blog._id] = blog.likedUsers?.includes(userEmail) || false;
       });
 
       setLikes(likeMap);
@@ -39,6 +64,7 @@ const MyBlogs1 = () => {
       setLikedBlogs(likedMap);
     } catch (err) {
       console.error("Fetch error:", err);
+      showToast("Failed to load your blogs.", "error");
     }
   };
 
@@ -63,11 +89,13 @@ const MyBlogs1 = () => {
       }));
     } catch (err) {
       console.error("Like failed:", err);
+      showToast("Unable to like this blog.", "error");
     }
   };
 
   const handleComment = async (id) => {
     const text = (commentText[id] || "").trim();
+
     if (!text) return;
 
     try {
@@ -86,19 +114,31 @@ const MyBlogs1 = () => {
         ...prev,
         [id]: "",
       }));
+
+      showToast("Comment added successfully.", "success");
     } catch (err) {
       console.error("Comment failed:", err);
+      showToast("Failed to add comment.", "error");
     }
   };
 
-  const handleDelete = async (id) => {
-    if (!window.confirm("Are you sure you want to delete this blog?")) return;
+  const handleDelete = async () => {
+    if (!deleteBlog) return;
 
     try {
-      await API.delete(`/blogs/${id}`);
-      fetchBlogs();
+      await API.delete(`/blogs/${deleteBlog._id}`);
+
+      setBlogs((prev) => prev.filter((blog) => blog._id !== deleteBlog._id));
+
+      setDeleteBlog(null);
+
+      showToast("Blog deleted successfully.", "success");
     } catch (err) {
       console.error("Delete failed:", err);
+
+      setDeleteBlog(null);
+
+      showToast("Failed to delete blog. Please try again.", "error");
     }
   };
 
@@ -107,27 +147,84 @@ const MyBlogs1 = () => {
 
     return content.root.children.map((node, idx) => {
       if (node.type === "list") {
+        const ListTag = node.listType === "number" ? "ol" : "ul";
+
         return (
-          <ul key={idx} style={{ paddingLeft: "20px" }}>
-            {node.children.map((li, i) => (
-              <li key={i}>
-                {li.children.map((c) => c.text).join("")}
+          <ListTag
+            key={idx}
+            style={{
+              paddingLeft: "24px",
+              margin: "8px 0",
+            }}
+          >
+            {node.children?.map((li, i) => (
+              <li
+                key={i}
+                style={{
+                  marginBottom: "5px",
+                }}
+              >
+                {li.children?.map((c) => c.text || "").join("")}
               </li>
             ))}
-          </ul>
+          </ListTag>
+        );
+      }
+
+      if (node.type === "heading") {
+        const HeadingTag = node.tag || "h3";
+
+        return (
+          <HeadingTag key={idx}>
+            {node.children?.map((c) => c.text || "").join("")}
+          </HeadingTag>
+        );
+      }
+
+      if (node.type === "quote") {
+        return (
+          <blockquote
+            key={idx}
+            style={{
+              borderLeft: "4px solid #6366f1",
+              paddingLeft: "12px",
+              margin: "10px 0",
+              color: "#555",
+            }}
+          >
+            {node.children?.map((c) => c.text || "").join("")}
+          </blockquote>
         );
       }
 
       return (
-        <p key={idx}>
-          {node.children.map((c) => c.text).join("")}
-        </p>
+        <p key={idx}>{node.children?.map((c) => c.text || "").join("")}</p>
       );
     });
   };
 
   return (
-    <div style={{ padding: "2rem", maxWidth: "800px", margin: "auto" }}>
+    <div
+      style={{
+        padding: "2rem",
+        maxWidth: "800px",
+        margin: "auto",
+      }}
+    >
+      {toast.show && (
+        <div
+          className={`blog-toast ${
+            toast.type === "error" ? "blog-toast-error" : "blog-toast-success"
+          }`}
+        >
+          <span className="blog-toast-icon">
+            {toast.type === "error" ? "✕" : "✓"}
+          </span>
+
+          <span>{toast.message}</span>
+        </div>
+      )}
+
       <h2>📝 My Blogs</h2>
 
       {blogs.length === 0 ? (
@@ -155,20 +252,34 @@ const MyBlogs1 = () => {
                   <video
                     src={blog.mediaUrl}
                     controls
-                    style={{ width: "100%", borderRadius: "12px" }}
+                    style={{
+                      width: "100%",
+                      borderRadius: "12px",
+                    }}
                   />
                 ) : (
                   <img
                     src={blog.mediaUrl}
                     alt=""
-                    style={{ width: "100%", borderRadius: "12px" }}
+                    style={{
+                      width: "100%",
+                      borderRadius: "12px",
+                    }}
                   />
                 ))}
 
               {blog.description && <p>{blog.description}</p>}
+
               {renderContent(blog.content)}
 
-              <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
+              <div
+                style={{
+                  display: "flex",
+                  gap: "10px",
+                  marginTop: "10px",
+                  flexWrap: "wrap",
+                }}
+              >
                 <button
                   onClick={() => handleLike(blog._id)}
                   style={{
@@ -215,13 +326,13 @@ const MyBlogs1 = () => {
                     const plainText =
                       blog.content?.root?.children
                         ?.map((node) =>
-                          node.children?.map((c) => c.text).join("")
+                          node.children?.map((c) => c.text || "").join(""),
                         )
                         .join("\n") || "";
 
                     setEditForm({
-                      title: blog.title,
-                      description: blog.description,
+                      title: blog.title || "",
+                      description: blog.description || "",
                       content: plainText,
                     });
                   }}
@@ -237,14 +348,15 @@ const MyBlogs1 = () => {
                 </button>
 
                 <button
-                  onClick={() => handleDelete(blog._id)}
+                  onClick={() => setDeleteBlog(blog)}
                   style={{
                     borderRadius: "25px",
                     padding: "6px 14px",
                     border: "none",
                     background: "#fdecea",
-                    color: "red",
+                    color: "#dc2626",
                     cursor: "pointer",
+                    fontWeight: "500",
                   }}
                 >
                   🗑️ Delete
@@ -275,7 +387,9 @@ const MyBlogs1 = () => {
                       <strong>{c.userName || c.user}:</strong> {c.text}
                       <br />
                       <small>
-                        {new Date(c.timestamp).toLocaleString()}
+                        {c.timestamp
+                          ? new Date(c.timestamp).toLocaleString()
+                          : ""}
                       </small>
                     </div>
                   ))}
@@ -312,6 +426,7 @@ const MyBlogs1 = () => {
                         background: "#007bff",
                         color: "#fff",
                         border: "none",
+                        cursor: "pointer",
                       }}
                     >
                       Post
@@ -329,10 +444,12 @@ const MyBlogs1 = () => {
           style={{
             position: "fixed",
             inset: 0,
-            background: "rgba(0,0,0,0.5)",
+            zIndex: 9998,
+            background: "rgba(0,0,0,0.55)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
+            padding: "20px",
           }}
         >
           <div
@@ -340,8 +457,10 @@ const MyBlogs1 = () => {
               background: "#fff",
               padding: "2rem",
               borderRadius: "16px",
-              width: "90%",
+              width: "100%",
               maxWidth: "600px",
+              maxHeight: "90vh",
+              overflowY: "auto",
             }}
           >
             <h3>Edit Blog</h3>
@@ -349,13 +468,17 @@ const MyBlogs1 = () => {
             <input
               value={editForm.title}
               onChange={(e) =>
-                setEditForm({ ...editForm, title: e.target.value })
+                setEditForm({
+                  ...editForm,
+                  title: e.target.value,
+                })
               }
               style={{
                 width: "100%",
                 marginBottom: "1rem",
                 borderRadius: "10px",
                 padding: "8px",
+                boxSizing: "border-box",
               }}
             />
 
@@ -372,13 +495,17 @@ const MyBlogs1 = () => {
                 marginBottom: "1rem",
                 borderRadius: "10px",
                 padding: "8px",
+                boxSizing: "border-box",
               }}
             />
 
             <textarea
               value={editForm.content}
               onChange={(e) =>
-                setEditForm({ ...editForm, content: e.target.value })
+                setEditForm({
+                  ...editForm,
+                  content: e.target.value,
+                })
               }
               rows={6}
               style={{
@@ -386,40 +513,64 @@ const MyBlogs1 = () => {
                 marginBottom: "1rem",
                 borderRadius: "10px",
                 padding: "8px",
+                boxSizing: "border-box",
               }}
             />
 
-            <button onClick={() => setEditingBlog(null)}>
+            <button
+              onClick={() => setEditingBlog(null)}
+              style={{
+                padding: "8px 16px",
+                borderRadius: "10px",
+                border: "1px solid #ddd",
+                background: "#fff",
+                cursor: "pointer",
+              }}
+            >
               Cancel
             </button>
 
             <button
               onClick={async () => {
-                await API.put(`/blogs/${editingBlog._id}`, {
-                  title: editForm.title,
-                  description: editForm.description,
-                  content: JSON.stringify({
-                    root: {
-                      children: [
-                        {
-                          type: "paragraph",
-                          children: [{ text: editForm.content }],
-                        },
-                      ],
-                    },
-                  }),
-                });
+                try {
+                  await API.put(`/blogs/${editingBlog._id}`, {
+                    title: editForm.title,
+                    description: editForm.description,
+                    content: JSON.stringify({
+                      root: {
+                        children: [
+                          {
+                            type: "paragraph",
+                            children: [
+                              {
+                                text: editForm.content,
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                    }),
+                  });
 
-                fetchBlogs();
-                setEditingBlog(null);
+                  await fetchBlogs();
+
+                  setEditingBlog(null);
+
+                  showToast("Blog updated successfully.", "success");
+                } catch (error) {
+                  console.error("Update failed:", error);
+
+                  showToast("Failed to update blog.", "error");
+                }
               }}
               style={{
                 marginLeft: "10px",
                 borderRadius: "10px",
-                padding: "6px 12px",
+                padding: "8px 16px",
                 background: "#007bff",
                 color: "#fff",
                 border: "none",
+                cursor: "pointer",
               }}
             >
               Save
@@ -427,6 +578,193 @@ const MyBlogs1 = () => {
           </div>
         </div>
       )}
+
+      {deleteBlog && (
+        <div
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 9999,
+            background: "rgba(15, 23, 42, 0.55)",
+            backdropFilter: "blur(5px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "20px",
+          }}
+          onClick={() => setDeleteBlog(null)}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              width: "100%",
+              maxWidth: "420px",
+              background: "#fff",
+              borderRadius: "20px",
+              padding: "28px",
+              boxShadow: "0 20px 60px rgba(0,0,0,0.25)",
+              textAlign: "center",
+            }}
+          >
+            <div
+              style={{
+                width: "64px",
+                height: "64px",
+                margin: "0 auto 18px",
+                borderRadius: "50%",
+                background: "#fee2e2",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: "28px",
+              }}
+            >
+              🗑️
+            </div>
+
+            <h3
+              style={{
+                margin: "0 0 10px",
+                fontSize: "22px",
+                color: "#111827",
+              }}
+            >
+              Delete this blog?
+            </h3>
+
+            <p
+              style={{
+                margin: "0 0 24px",
+                color: "#6b7280",
+                lineHeight: "1.5",
+                fontSize: "14px",
+              }}
+            >
+              Are you sure you want to delete{" "}
+              <strong>"{deleteBlog.title}"</strong>? This action cannot be
+              undone.
+            </p>
+
+            <div
+              style={{
+                display: "flex",
+                gap: "10px",
+                justifyContent: "center",
+              }}
+            >
+              <button
+                type="button"
+                onClick={() => setDeleteBlog(null)}
+                style={{
+                  flex: 1,
+                  padding: "11px 18px",
+                  borderRadius: "10px",
+                  border: "1px solid #d1d5db",
+                  background: "#fff",
+                  color: "#374151",
+                  cursor: "pointer",
+                  fontWeight: "600",
+                }}
+              >
+                Cancel
+              </button>
+
+              <button
+                type="button"
+                onClick={handleDelete}
+                style={{
+                  flex: 1,
+                  padding: "11px 18px",
+                  borderRadius: "10px",
+                  border: "none",
+                  background: "#dc2626",
+                  color: "#fff",
+                  cursor: "pointer",
+                  fontWeight: "600",
+                }}
+              >
+                Delete Blog
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <style>
+        {`
+          .blog-toast {
+            position: fixed;
+            top: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10000;
+            min-width: 280px;
+            max-width: calc(100vw - 32px);
+            padding: 14px 20px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.15);
+            animation: blogToastIn 0.3s ease;
+          }
+
+          .blog-toast-success {
+            background: #ecfdf5;
+            color: #047857;
+            border: 1px solid #a7f3d0;
+          }
+
+          .blog-toast-error {
+            background: #fef2f2;
+            color: #b91c1c;
+            border: 1px solid #fecaca;
+          }
+
+          .blog-toast-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            flex-shrink: 0;
+          }
+
+          .blog-toast-success .blog-toast-icon {
+            background: #10b981;
+            color: white;
+          }
+
+          .blog-toast-error .blog-toast-icon {
+            background: #ef4444;
+            color: white;
+          }
+
+          @keyframes blogToastIn {
+            from {
+              opacity: 0;
+              transform: translate(-50%, -20px);
+            }
+            to {
+              opacity: 1;
+              transform: translate(-50%, 0);
+            }
+          }
+
+          @media (max-width: 500px) {
+            .blog-toast {
+              top: 14px;
+              min-width: 0;
+              width: calc(100vw - 28px);
+              box-sizing: border-box;
+            }
+          }
+        `}
+      </style>
     </div>
   );
 };

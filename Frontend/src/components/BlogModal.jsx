@@ -7,7 +7,7 @@ const BlogModal = ({
   user,
   handleLike,
   handleAddComment,
-  handleDeleteComment, 
+  handleDeleteComment,
 }) => {
   const [commentText, setCommentText] = useState("");
 
@@ -29,16 +29,13 @@ const BlogModal = ({
         return (
           <ul key={idx}>
             {block.children.map((item, i) => (
-              <li key={i}>
-                {item.children?.map((c) => c.text).join("")}
-              </li>
+              <li key={i}>{item.children?.map((c) => c.text).join("")}</li>
             ))}
           </ul>
         );
       }
 
-      const text =
-        block.children?.map((child) => child.text).join("") || "";
+      const text = block.children?.map((child) => child.text).join("") || "";
 
       return <p key={idx}>{text}</p>;
     });
@@ -51,10 +48,8 @@ const BlogModal = ({
           ✖
         </button>
 
-       
         <h2 className="title">{blog.title}</h2>
 
-        
         {blog.mediaUrl && (
           <>
             {blog.mediaUrl.endsWith(".mp4") ||
@@ -66,10 +61,8 @@ const BlogModal = ({
           </>
         )}
 
-      
         <div className="content">{renderContent(blog.content)}</div>
 
-       
         {user ? (
           <>
             <div className="actions">
@@ -83,7 +76,6 @@ const BlogModal = ({
                 {likes}
               </button>
 
-            
               <div className="commentSection">
                 <input
                   type="text"
@@ -92,47 +84,34 @@ const BlogModal = ({
                   placeholder="Write a comment..."
                   className="commentInput"
                 />
-                <button
-                  className="commentBtn"
-                  onClick={handleCommentClick}
-                >
+                <button className="commentBtn" onClick={handleCommentClick}>
                   💬 Comment
                 </button>
               </div>
             </div>
 
-           
             <div className="commentList">
               <h3>💬 Comments</h3>
 
-              {blog.comments?.length === 0 && (
-                <p>No comments yet</p>
-              )}
+              {blog.comments?.length === 0 && <p>No comments yet</p>}
 
               {blog.comments?.map((c) => {
                 const commentUserId = c.userId || c.user || "";
-                const isOwnComment =
-                  user && user.email === commentUserId;
+                const isOwnComment = user && user.email === commentUserId;
 
                 return (
                   <div key={c._id} className="commentItem">
                     <div className="commentText">
-                      <strong>
-                        {c.userName || c.user || "User"}:
-                      </strong>{" "}
+                      <strong>{c.userName || c.user || "User"}:</strong>{" "}
                       {c.text}
                     </div>
 
                     <div className="commentActions">
-                      <small>
-                        {new Date(c.timestamp).toLocaleString()}
-                      </small>
+                      <small>{new Date(c.timestamp).toLocaleString()}</small>
 
                       {isOwnComment && handleDeleteComment && (
                         <button
-                          onClick={() =>
-                            handleDeleteComment(blog._id, c._id)
-                          }
+                          onClick={() => handleDeleteComment(blog._id, c._id)}
                           className="deleteBtn"
                         >
                           🗑️
@@ -145,12 +124,9 @@ const BlogModal = ({
             </div>
           </>
         ) : (
-          <p className="loginPrompt">
-            🔒 Please login to like or comment
-          </p>
+          <p className="loginPrompt">🔒 Please login to like or comment</p>
         )}
 
-        
         <button className="cancelBottomBtn" onClick={onClose}>
           Cancel
         </button>
