@@ -78,11 +78,6 @@ const LoginPage = ({ onClose, onSignupClick, onLoginSuccess }) => {
           className="input-field"
           value={emailOrName}
           onChange={(e) => setEmailOrName(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              handleLogin(e);
-            }
-          }}
         />
 
         <label htmlFor="password" className="input-label">
@@ -166,8 +161,14 @@ const LoginPage = ({ onClose, onSignupClick, onLoginSuccess }) => {
               type="password"
               placeholder="Confirm new password"
               value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
               className="input-field"
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  handlePasswordReset();
+                }
+              }}
             />
             <div className="modal-buttons">
               <button onClick={handlePasswordReset} className="login-btn">
