@@ -193,6 +193,15 @@
   font-weight: 600;
 }
 
+@media (max-width: 480px) {
+  .card img,
+  .card video {
+    height: auto;
+    max-height: 300px;
+    object-fit: inherit;
+  }
+}
+
 .blogToast {
   position: fixed;
   top: 25px;

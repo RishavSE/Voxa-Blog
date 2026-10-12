@@ -64,7 +64,7 @@
   color: #333;
 }
 
-img {
+.modalContainer img {
   width: 100%;
   height: auto;
   max-height: 300px;
@@ -72,7 +72,7 @@ img {
   border-radius: 0.5rem;
 }
 
-video {
+.modalContainer video {
   width: 100%;
   height: auto;
   max-height: 300px;
@@ -169,8 +169,11 @@ video {
     padding: 1rem;
   }
 
-  img {
-    max-height: 200px;
+  .modalContainer img,
+  .modalContainer video {
+    height: auto;
+    max-height: 300px;
+    object-fit: inherit;
   }
 
   .title {
