@@ -352,7 +352,7 @@
   .card video {
     height: auto;
     max-height: 300px;
-    object-fit: cover;
+    object-fit: inherit;
   }
 
   .buttons {
