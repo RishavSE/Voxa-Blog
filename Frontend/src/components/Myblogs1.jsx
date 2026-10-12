@@ -166,7 +166,10 @@ const MyBlogs1 = ({ theme }) => {
         </div>
       )}
 
-      <h2>📝 My Blogs</h2>
+      <h2 className="my-blogs-heading">
+        <img src="/my-blogs-icon.png" alt="" aria-hidden="true" />
+        My Blogs
+      </h2>
 
       {blogs.length === 0 ? (
         <p>No blogs found</p>

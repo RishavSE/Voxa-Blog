@@ -252,6 +252,18 @@ html[data-theme="dark"] .my-blogs-page {
   color: var(--text);
 }
 
+.my-blogs-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.my-blogs-heading img {
+  width: 2.5rem;
+  height: 2.5rem;
+  object-fit: contain;
+}
+
 html[data-theme="dark"] .my-blogs-page h2,
 html[data-theme="dark"] .my-blogs-page h3,
 html[data-theme="dark"] .my-blogs-page h4,
