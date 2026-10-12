@@ -21,7 +21,7 @@ const editorConfig = {
   nodes: [HeadingNode, ListNode, ListItemNode, QuoteNode],
 };
 
-const MyBlogs = () => {
+const MyBlogs = ({ theme }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [editorContent, setEditorContent] = useState(null);
@@ -172,11 +172,7 @@ const MyBlogs = () => {
 
   return (
     <section
-      style={{
-        padding: "2rem",
-        maxWidth: 700,
-        margin: "0 auto",
-      }}
+      className="create-blog-page editor-container"
     >
       {toast.show && (
         <div className="blog-toast-container">
@@ -208,26 +204,18 @@ const MyBlogs = () => {
         </div>
       )}
 
-      <h2 style={{ marginBottom: "1.5rem" }}>Write and Upload Your Blog</h2>
+      <h2 className="create-blog-heading">Write and Upload Your Blog</h2>
 
       <label>
         Blog Title <span style={{ color: "red" }}>*</span>
       </label>
 
       <input
+        className="create-blog-title-input"
         type="text"
         placeholder="Enter blog title"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
-        style={{
-          width: "100%",
-          padding: "0.5rem",
-          fontSize: "1.1rem",
-          borderRadius: 4,
-          border: "1px solid #ccc",
-          marginBottom: "1rem",
-          boxSizing: "border-box",
-        }}
       />
 
       <label className="media-upload-label">Upload Image or Video</label>
@@ -278,6 +266,7 @@ const MyBlogs = () => {
 
       {mediaPreviewUrl && mediaFile && (
         <div
+          className="media-preview"
           style={{
             position: "relative",
             marginBottom: "1rem",
@@ -287,19 +276,13 @@ const MyBlogs = () => {
             <img
               src={mediaPreviewUrl}
               alt="Preview"
-              style={{
-                maxWidth: "100%",
-                display: "block",
-              }}
+              className="media-preview-content"
             />
           ) : (
             <video
               controls
               src={mediaPreviewUrl}
-              style={{
-                maxWidth: "100%",
-                display: "block",
-              }}
+              className="media-preview-content"
             />
           )}
 
@@ -327,18 +310,10 @@ const MyBlogs = () => {
       <label>Description (optional)</label>
 
       <textarea
+        className="create-blog-description"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
         rows={3}
-        style={{
-          width: "100%",
-          padding: "0.5rem",
-          borderRadius: 4,
-          border: "1px solid #ccc",
-          marginBottom: "1rem",
-          boxSizing: "border-box",
-          resize: "vertical",
-        }}
       />
 
       <label>
@@ -346,6 +321,7 @@ const MyBlogs = () => {
       </label>
 
       <div
+        className="editor-inner"
         style={{
           border: "1px solid #ccc",
           borderRadius: 6,
@@ -377,23 +353,14 @@ const MyBlogs = () => {
 
           <OnChangePlugin onChange={handleEditorChange} />
 
-          <ToolbarPlugin />
+          <ToolbarPlugin theme={theme} />
         </LexicalComposer>
       </div>
 
       <button
+        className="create-blog-submit"
         type="button"
         onClick={handlePost}
-        style={{
-          padding: "0.75rem 2rem",
-          background: "linear-gradient(45deg, #ff4d6d, #ff9a9e)",
-          border: "none",
-          borderRadius: 4,
-          color: "#fff",
-          cursor: "pointer",
-          fontSize: "1.1rem",
-          marginTop: "1.2rem",
-        }}
       >
         Post Blog
       </button>

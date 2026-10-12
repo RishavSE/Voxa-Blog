@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FORMAT_TEXT_COMMAND,
   $getSelection,
@@ -13,6 +13,7 @@ import {
   $isListItemNode,
 } from "@lexical/list";
 import "./toolbarplugin.css";
+import { getReadableTextColor } from "../utils/textColor";
 
 const emojiCategories = [
   {
@@ -132,11 +133,17 @@ const blogTypes = [
   "Personal",
 ];
 
-const ToolbarPlugin = () => {
+const ToolbarPlugin = ({ theme }) => {
   const [editor] = useLexicalComposerContext();
 
-  const [textColor, setTextColor] = useState("#000000");
+  const [textColor, setTextColor] = useState(() =>
+    theme === "dark" ? "#f1f5f9" : "#000000",
+  );
   const [showEmojis, setShowEmojis] = useState(false);
+
+  useEffect(() => {
+    setTextColor(theme === "dark" ? "#f1f5f9" : "#000000");
+  }, [theme]);
 
   const applyStyle = (styles) => {
     editor.update(() => {
@@ -257,7 +264,10 @@ const ToolbarPlugin = () => {
               type="color"
               value={textColor}
               onChange={(e) => {
-                const color = e.target.value;
+                const color = getReadableTextColor(
+                  e.target.value,
+                  theme,
+                );
                 setTextColor(color);
                 applyStyle({ color });
               }}

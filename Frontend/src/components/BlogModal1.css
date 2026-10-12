@@ -29,13 +29,34 @@
 .closeBtn,
 .topCloseBtn {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
-  font-size: 1.2rem;
-  background: transparent;
-  border: none;
+  top: 0.875rem;
+  right: 0.875rem;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid var(--border, #e2e8f0);
+  border-radius: 50%;
+  background: var(--surface-muted, #f8fafc);
   cursor: pointer;
-  color: #333;
+  color: var(--text, #333);
+  font-size: 25px;
+  font-weight: 400;
+  line-height: 1;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.closeBtn:hover,
+.topCloseBtn:hover {
+  background: var(--surface-hover, #eef2f7);
+  transform: rotate(90deg);
+}
+
+.closeBtn:focus-visible,
+.topCloseBtn:focus-visible {
+  outline: 3px solid var(--accent, #ec4899);
+  outline-offset: 2px;
 }
 
 .title {

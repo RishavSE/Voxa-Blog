@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import API from "../api";
+import BlogContent from "./BlogContent";
 
-const MyBlogs1 = () => {
+const MyBlogs1 = ({ theme }) => {
   const [blogs, setBlogs] = useState([]);
   const [comments, setComments] = useState({});
   const [likes, setLikes] = useState({});
@@ -142,69 +143,9 @@ const MyBlogs1 = () => {
     }
   };
 
-  const renderContent = (content) => {
-    if (!content?.root?.children) return null;
-
-    return content.root.children.map((node, idx) => {
-      if (node.type === "list") {
-        const ListTag = node.listType === "number" ? "ol" : "ul";
-
-        return (
-          <ListTag
-            key={idx}
-            style={{
-              paddingLeft: "24px",
-              margin: "8px 0",
-            }}
-          >
-            {node.children?.map((li, i) => (
-              <li
-                key={i}
-                style={{
-                  marginBottom: "5px",
-                }}
-              >
-                {li.children?.map((c) => c.text || "").join("")}
-              </li>
-            ))}
-          </ListTag>
-        );
-      }
-
-      if (node.type === "heading") {
-        const HeadingTag = node.tag || "h3";
-
-        return (
-          <HeadingTag key={idx}>
-            {node.children?.map((c) => c.text || "").join("")}
-          </HeadingTag>
-        );
-      }
-
-      if (node.type === "quote") {
-        return (
-          <blockquote
-            key={idx}
-            style={{
-              borderLeft: "4px solid #6366f1",
-              paddingLeft: "12px",
-              margin: "10px 0",
-              color: "#555",
-            }}
-          >
-            {node.children?.map((c) => c.text || "").join("")}
-          </blockquote>
-        );
-      }
-
-      return (
-        <p key={idx}>{node.children?.map((c) => c.text || "").join("")}</p>
-      );
-    });
-  };
-
   return (
     <div
+      className="my-blogs-page"
       style={{
         padding: "2rem",
         maxWidth: "800px",
@@ -236,6 +177,7 @@ const MyBlogs1 = () => {
           return (
             <div
               key={blog._id}
+              className="my-blog-card"
               style={{
                 border: "1px solid #ddd",
                 borderRadius: "16px",
@@ -270,9 +212,14 @@ const MyBlogs1 = () => {
 
               {blog.description && <p>{blog.description}</p>}
 
-              {renderContent(blog.content)}
+              <BlogContent
+                content={blog.content}
+                className="blog-rich-content"
+                theme={theme}
+              />
 
               <div
+                className="my-blog-actions"
                 style={{
                   display: "flex",
                   gap: "10px",
@@ -365,6 +312,7 @@ const MyBlogs1 = () => {
 
               {showComments[blog._id] && (
                 <div
+                  className="my-blog-comment-list"
                   style={{
                     marginTop: "1rem",
                     padding: "1rem",
@@ -377,6 +325,7 @@ const MyBlogs1 = () => {
                   {(comments[blog._id] || []).map((c, i) => (
                     <div
                       key={i}
+                      className="my-blog-comment"
                       style={{
                         background: "#fff",
                         padding: "8px",
@@ -395,6 +344,7 @@ const MyBlogs1 = () => {
                   ))}
 
                   <div
+                    className="my-blog-comment-form"
                     style={{
                       display: "flex",
                       gap: "8px",
@@ -441,6 +391,7 @@ const MyBlogs1 = () => {
 
       {editingBlog && (
         <div
+          className="edit-blog-overlay"
           style={{
             position: "fixed",
             inset: 0,
@@ -453,6 +404,7 @@ const MyBlogs1 = () => {
           }}
         >
           <div
+            className="edit-blog-modal"
             style={{
               background: "#fff",
               padding: "2rem",
@@ -519,6 +471,7 @@ const MyBlogs1 = () => {
 
             <button
               onClick={() => setEditingBlog(null)}
+              className="edit-blog-cancel"
               style={{
                 padding: "8px 16px",
                 borderRadius: "10px",
@@ -563,6 +516,7 @@ const MyBlogs1 = () => {
                   showToast("Failed to update blog.", "error");
                 }
               }}
+              className="edit-blog-save"
               style={{
                 marginLeft: "10px",
                 borderRadius: "10px",
@@ -581,6 +535,7 @@ const MyBlogs1 = () => {
 
       {deleteBlog && (
         <div
+          className="delete-blog-overlay"
           style={{
             position: "fixed",
             inset: 0,
@@ -595,6 +550,7 @@ const MyBlogs1 = () => {
           onClick={() => setDeleteBlog(null)}
         >
           <div
+            className="delete-blog-modal"
             onClick={(e) => e.stopPropagation()}
             style={{
               width: "100%",
@@ -655,6 +611,7 @@ const MyBlogs1 = () => {
               <button
                 type="button"
                 onClick={() => setDeleteBlog(null)}
+                className="delete-blog-cancel"
                 style={{
                   flex: 1,
                   padding: "11px 18px",

@@ -12,6 +12,9 @@ import BlogModal from "./components/BlogModal";
 import API from "./api";
 
 function App() {
+  const [theme, setTheme] = useState(
+    () => localStorage.getItem("voxa-theme") || "light",
+  );
   const [showLogin, setShowLogin] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
   const [showWriteBlog, setShowWriteBlog] = useState(false);
@@ -19,6 +22,17 @@ function App() {
   const [activeBlog, setActiveBlog] = useState(null);
   const [user, setUser] = useState(null);
   const [blogs, setBlogs] = useState([]);
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    document.documentElement.style.colorScheme = theme;
+  }, [theme]);
+
+  const handleThemeToggle = () => {
+    const nextTheme = theme === "light" ? "dark" : "light";
+    localStorage.setItem("voxa-theme", nextTheme);
+    setTheme(nextTheme);
+  };
 
   const [toast, setToast] = useState({
     show: false,
@@ -407,6 +421,8 @@ function App() {
 
       <Header
         user={user}
+        theme={theme}
+        onToggleTheme={handleThemeToggle}
         onLoginClick={handleLoginClick}
         onLogout={handleLogout}
         onMyBlogsClick={handleMyBlogsClick}
@@ -441,9 +457,9 @@ function App() {
         />
       )}
 
-      {showWriteBlog && user && <MyBlogs user={user} />}
+      {showWriteBlog && user && <MyBlogs user={user} theme={theme} />}
 
-      {showMyBlogs && user && <MyBlogs1 user={user} />}
+      {showMyBlogs && user && <MyBlogs1 user={user} theme={theme} />}
 
       {!showLogin && !showSignup && !showMyBlogs && !showWriteBlog && (
         <>
@@ -472,6 +488,7 @@ function App() {
       {activeBlog && (
         <BlogModal
           blog={activeBlog}
+          theme={theme}
           onClose={handleCloseBlog}
           user={user}
           handleLike={handleLike}

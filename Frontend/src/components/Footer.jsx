@@ -9,6 +9,7 @@ import {
 function Footer() {
   return (
     <footer
+      className="site-footer"
       style={{
         width: "100%",
         boxSizing: "border-box",

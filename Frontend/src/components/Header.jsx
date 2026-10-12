@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./Header.module.css";
-import { FaBars } from "react-icons/fa";
+import { FaBars, FaMoon, FaSun } from "react-icons/fa";
 
 function Header({
   user,
@@ -9,6 +9,8 @@ function Header({
   onLogout,
   onHomeClick,
   onWriteBlogClick,
+  theme,
+  onToggleTheme,
 }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
@@ -30,12 +32,15 @@ function Header({
           VoxaBlog
         </div>
 
-        <div
+        <button
+          type="button"
           className={styles.hamburger}
           onClick={() => setMenuOpen(!menuOpen)}
+          aria-expanded={menuOpen}
+          aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
         >
           <FaBars />
-        </div>
+        </button>
 
         <nav className={styles.desktopNav}>
           <span
@@ -60,29 +65,45 @@ function Header({
           </span>
         </nav>
 
-        <div className={styles.desktopUser}>
-          {user ? (
-            <>
-              <div className={styles.userInfo}>
-                {user.name}
-                <span>(Role: {user.role})</span>
-              </div>
+        <div className={styles.headerActions}>
+          <div className={styles.desktopUser}>
+            {user ? (
+              <>
+                <div className={styles.userInfo}>
+                  {user.name}
+                  <span>(Role: {user.role})</span>
+                </div>
 
+                <button
+                  onClick={handleLogoutClick}
+                  className={styles.loginBtn}
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
               <button
-                onClick={handleLogoutClick}
+                onClick={onLoginClick}
                 className={styles.loginBtn}
               >
-                Logout
+                Log in / Sign up
               </button>
-            </>
-          ) : (
-            <button
-              onClick={onLoginClick}
-              className={styles.loginBtn}
-            >
-              Log in / Sign up
-            </button>
-          )}
+            )}
+          </div>
+
+          <button
+            type="button"
+            className={styles.themeToggle}
+            onClick={onToggleTheme}
+            aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
+            title={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
+          >
+            {theme === "light" ? (
+              <FaMoon aria-hidden="true" />
+            ) : (
+              <FaSun aria-hidden="true" />
+            )}
+          </button>
         </div>
 
         <div

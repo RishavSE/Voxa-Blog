@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from "./LatestBlogs.module.css";
 import { IoIosTrendingUp } from "react-icons/io";
+import BlogContent from "./BlogContent";
 
 const TrendingBlogs = ({
   blogs,
@@ -51,6 +52,7 @@ const TrendingBlogs = ({
         {latestBlogs.map((blog) => {
           const liked = user && blog.likedUsers?.includes(user.email);
           const likes = blog.likes || 0;
+          const title = blog.title || "Untitled blog";
 
           return (
             <div key={blog._id} className={styles.cardWrapper}>
@@ -58,8 +60,8 @@ const TrendingBlogs = ({
                 {renderMedia(blog.mediaUrl)}
 
                 <h3>
-                  {truncateText(blog.title, 50)}
-                  {blog.title.length > 50 && (
+                  {truncateText(title, 50)}
+                  {title.length > 50 && (
                     <span
                       onClick={() => setActiveBlog(blog)}
                       className={styles.viewMore}
@@ -73,6 +75,11 @@ const TrendingBlogs = ({
                   <strong>Description:</strong>{" "}
                   {truncateText(blog.description || "No description", 60)}
                 </p>
+
+                <BlogContent
+                  content={blog.content}
+                  className={`${styles.contentPreview} blog-rich-content`}
+                />
 
                 <div className={styles.buttons}>
                   <button

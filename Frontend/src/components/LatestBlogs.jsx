@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from "./LatestBlogs.module.css";
 import { IoMegaphoneOutline } from "react-icons/io5";
+import BlogContent from "./BlogContent";
 const LatestBlogs = ({
   blogs,
   setActiveBlog,
@@ -41,6 +42,7 @@ const LatestBlogs = ({
           .map((blog) => {
             const liked = user && blog.likedUsers?.includes(user.email);
             const likes = blog.likes || 0;
+            const title = blog.title || "Untitled blog";
 
             return (
               <div key={blog._id} className={styles.cardWrapper}>
@@ -48,8 +50,8 @@ const LatestBlogs = ({
                   {renderMedia(blog.mediaUrl)}
 
                   <h3>
-                    {truncateText(blog.title, 50)}
-                    {blog.title.length > 50 && (
+                    {truncateText(title, 50)}
+                    {title.length > 50 && (
                       <span
                         onClick={() => setActiveBlog(blog)}
                         className={styles.viewMore}
@@ -63,6 +65,11 @@ const LatestBlogs = ({
                     <strong>Description:</strong>{" "}
                     {truncateText(blog.description || "No description", 60)}
                   </p>
+
+                  <BlogContent
+                    content={blog.content}
+                    className={`${styles.contentPreview} blog-rich-content`}
+                  />
 
                   <div className={styles.buttons}>
                     <button

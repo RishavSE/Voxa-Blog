@@ -1,0 +1,391 @@
+:root {
+  color-scheme: light;
+  --page-bg: #ffffff;
+  --surface: #ffffff;
+  --surface-muted: #f8fafc;
+  --surface-hover: #eef2f7;
+  --text: #1f2937;
+  --text-muted: #64748b;
+  --border: #e2e8f0;
+  --shadow: rgba(15, 23, 42, 0.08);
+  --accent: #ec4899;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--page-bg);
+  color: var(--text);
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+img,
+video {
+  max-width: 100%;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+@media (max-width: 768px) {
+  .editor-container {
+    width: calc(100% - 1.5rem);
+  }
+
+  .my-blogs-page {
+    padding: 1rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-box,
+  .signup-box {
+    width: calc(100% - 2rem);
+    padding: 1.5rem;
+  }
+
+  .modal-content {
+    width: min(320px, calc(100vw - 2rem));
+    padding: 1.5rem;
+  }
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --page-bg: #10131d;
+  --surface: #1a2030;
+  --surface-muted: #222a3c;
+  --surface-hover: #303a50;
+  --text: #f1f5f9;
+  --text-muted: #b8c2d3;
+  --border: #39445a;
+  --shadow: rgba(0, 0, 0, 0.28);
+  --accent: #f9a8d4;
+}
+
+html[data-theme="dark"] body,
+html[data-theme="dark"] #root,
+html[data-theme="dark"] .App {
+  background: var(--page-bg);
+  color: var(--text);
+}
+
+html[data-theme="dark"] .login-box,
+html[data-theme="dark"] .signup-box,
+html[data-theme="dark"] .modal-content,
+html[data-theme="dark"] .modalContainer,
+html[data-theme="dark"] .editor-container,
+html[data-theme="dark"] .editor-inner {
+  background: var(--surface);
+  color: var(--text);
+  border-color: var(--border);
+}
+
+html[data-theme="dark"] .signup-container {
+  background: var(--page-bg);
+}
+
+html[data-theme="dark"] .login-title,
+html[data-theme="dark"] .signup-title,
+html[data-theme="dark"] .login-box,
+html[data-theme="dark"] .signup-box,
+html[data-theme="dark"] .editor-container,
+html[data-theme="dark"] .editor-input,
+html[data-theme="dark"] .modalContainer,
+html[data-theme="dark"] .modalContainer .title,
+html[data-theme="dark"] .modalContainer .content,
+html[data-theme="dark"] .modalContainer .list {
+  color: var(--text);
+}
+
+html[data-theme="dark"] .input-label {
+  color: var(--text-muted);
+}
+
+html[data-theme="dark"] input,
+html[data-theme="dark"] textarea,
+html[data-theme="dark"] select,
+html[data-theme="dark"] .commentInput {
+  background-color: var(--surface-muted);
+  color: var(--text);
+  border-color: var(--border);
+}
+
+html[data-theme="dark"] input::placeholder,
+html[data-theme="dark"] textarea::placeholder {
+  color: #9aa7bc;
+}
+
+html[data-theme="dark"] .editor-inner,
+html[data-theme="dark"] .toolbar {
+  background: var(--surface-muted);
+}
+
+html[data-theme="dark"] .toolbar button,
+html[data-theme="dark"] .toolbar select,
+html[data-theme="dark"] .toolbar input[type="color"],
+html[data-theme="dark"] .toolbar-btn {
+  background: var(--surface);
+  color: var(--text);
+  border-color: var(--border);
+}
+
+html[data-theme="dark"] .media-upload-container {
+  background: var(--surface-muted);
+  border-color: var(--border);
+}
+
+html[data-theme="dark"] .media-upload-container:hover,
+html[data-theme="dark"] .media-upload-dragging {
+  background: #303a50;
+  border-color: #818cf8;
+}
+
+html[data-theme="dark"] .media-upload-container h3 {
+  color: var(--text);
+}
+
+html[data-theme="dark"] .media-upload-container p {
+  color: var(--text-muted);
+}
+
+html[data-theme="dark"] .create-blog-page {
+  color: var(--text);
+}
+
+html[data-theme="dark"] .create-blog-page h2 {
+  color: var(--text);
+}
+
+html[data-theme="dark"] .create-blog-page > label {
+  display: block;
+  margin: 0 0 0.5rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+html[data-theme="dark"] .create-blog-page input,
+html[data-theme="dark"] .create-blog-page textarea {
+  border: 1px solid var(--border) !important;
+  border-radius: 8px !important;
+}
+
+html[data-theme="dark"] .create-blog-page > div[style*="border: 1px solid #ccc"] {
+  border-color: var(--border) !important;
+}
+
+html[data-theme="dark"] .create-blog-page .editor-inner {
+  border-color: var(--border) !important;
+}
+
+html[data-theme="dark"] .blog-toolbar,
+html[data-theme="dark"] .toolbar-controls {
+  background: var(--surface-muted);
+}
+
+html[data-theme="dark"] .blog-toolbar {
+  border-color: var(--border);
+}
+
+html[data-theme="dark"] .toolbar-btn,
+html[data-theme="dark"] .blog-type-select,
+html[data-theme="dark"] .color-control,
+html[data-theme="dark"] .emoji-button,
+html[data-theme="dark"] .emoji-close {
+  background: var(--surface);
+  color: var(--text);
+  border-color: var(--border);
+}
+
+html[data-theme="dark"] .toolbar-btn:hover,
+html[data-theme="dark"] .emoji-button:hover,
+html[data-theme="dark"] .emoji-item:hover,
+html[data-theme="dark"] .emoji-close:hover {
+  background: var(--surface-hover);
+}
+
+html[data-theme="dark"] .toolbar-divider {
+  background: var(--border);
+}
+
+html[data-theme="dark"] .color-label,
+html[data-theme="dark"] .emoji-category-title,
+html[data-theme="dark"] .emoji-picker-title strong {
+  color: var(--text);
+}
+
+html[data-theme="dark"] .emoji-picker,
+html[data-theme="dark"] .emoji-picker-header {
+  background: var(--surface-muted);
+  color: var(--text);
+  border-color: var(--border);
+}
+
+html[data-theme="dark"] .emoji-picker-title span {
+  color: var(--text-muted);
+}
+
+html[data-theme="dark"] .emoji-item {
+  color: var(--text);
+}
+
+html[data-theme="dark"] .my-blogs-page {
+  color: var(--text);
+}
+
+html[data-theme="dark"] .my-blogs-page h2,
+html[data-theme="dark"] .my-blogs-page h3,
+html[data-theme="dark"] .my-blogs-page h4,
+html[data-theme="dark"] .my-blogs-page p,
+html[data-theme="dark"] .my-blogs-page small {
+  color: var(--text);
+}
+
+html[data-theme="dark"] .my-blog-card,
+html[data-theme="dark"] .my-blog-comment,
+html[data-theme="dark"] .edit-blog-modal,
+html[data-theme="dark"] .delete-blog-modal {
+  background: var(--surface) !important;
+  color: var(--text);
+  border-color: var(--border) !important;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.28);
+}
+
+html[data-theme="dark"] .my-blog-actions button {
+  background: var(--surface-muted) !important;
+  color: var(--text) !important;
+  border: 1px solid var(--border) !important;
+}
+
+html[data-theme="dark"] .my-blog-actions button:hover {
+  background: var(--surface-hover) !important;
+}
+
+html[data-theme="dark"] .my-blog-actions button:last-child {
+  background: #492633 !important;
+  border-color: #8f425b !important;
+  color: #ff9eb2 !important;
+}
+
+html[data-theme="dark"] .my-blog-comment-list {
+  background: var(--surface-muted) !important;
+  color: var(--text);
+}
+
+html[data-theme="dark"] .my-blog-comment-list h4,
+html[data-theme="dark"] .my-blog-comment-list strong,
+html[data-theme="dark"] .my-blog-comment-list small {
+  color: var(--text);
+}
+
+html[data-theme="dark"] .my-blog-comment-form button {
+  background: #4f46e5 !important;
+  color: #fff !important;
+}
+
+html[data-theme="dark"] .edit-blog-modal button.edit-blog-cancel,
+html[data-theme="dark"] .delete-blog-modal button.delete-blog-cancel {
+  background: var(--surface-muted) !important;
+  border-color: var(--border) !important;
+  color: var(--text) !important;
+}
+
+html[data-theme="dark"] .edit-blog-modal button.edit-blog-save {
+  background: #4f46e5 !important;
+  color: #fff !important;
+}
+
+html[data-theme="dark"] .delete-blog-modal h3,
+html[data-theme="dark"] .delete-blog-modal p {
+  color: var(--text) !important;
+}
+
+html[data-theme="dark"] .my-blogs-page blockquote {
+  color: var(--text-muted) !important;
+}
+
+html[data-theme="dark"] .blog-rich-content {
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+
+html[data-theme="dark"] .blog-rich-content blockquote {
+  margin: 0.75rem 0;
+  padding: 0.5rem 0.75rem;
+  border-left: 3px solid #818cf8;
+  background: var(--surface-muted);
+  color: var(--text-muted);
+}
+
+html[data-theme="dark"] .blog-rich-content code {
+  background: var(--surface-muted);
+  color: var(--text);
+}
+
+html[data-theme="dark"] .modalContainer .title,
+html[data-theme="dark"] .modalContainer .content,
+html[data-theme="dark"] .modalContainer .list,
+html[data-theme="dark"] .modalContainer .commentList,
+html[data-theme="dark"] .modalContainer .commentItem {
+  color: var(--text);
+}
+
+html[data-theme="dark"] .modalContainer .likeBtn,
+html[data-theme="dark"] .modalContainer .commentBtn {
+  background: var(--surface-muted);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+html[data-theme="dark"] .modalContainer .commentItem {
+  padding: 0.75rem;
+  border-radius: 8px;
+  background: var(--surface-muted);
+}
+
+html[data-theme="dark"] footer.site-footer {
+  background: linear-gradient(to right, #171b2a, #1a2030) !important;
+  color: var(--text) !important;
+}
+
+html[data-theme="dark"] footer.site-footer p,
+html[data-theme="dark"] footer.site-footer > div:last-child,
+html[data-theme="dark"] footer.site-footer a {
+  color: var(--text-muted) !important;
+}
+
+html[data-theme="dark"] footer.site-footer > div:last-child {
+  border-color: var(--border) !important;
+}
+
+html[data-theme="dark"] footer.site-footer > div > div:first-child > div > div {
+  background: var(--surface-muted) !important;
+  color: var(--text) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+}

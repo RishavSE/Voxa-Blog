@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import "./BlogModal1.css";
+import BlogContent from "./BlogContent";
 
 const BlogModal = ({
   blog,
+  theme,
   onClose,
   user,
   handleLike,
@@ -21,31 +23,16 @@ const BlogModal = ({
     setCommentText("");
   };
 
-  const renderContent = (content) => {
-    if (!content?.root?.children) return null;
-
-    return content.root.children.map((block, idx) => {
-      if (block.type === "list") {
-        return (
-          <ul key={idx}>
-            {block.children.map((item, i) => (
-              <li key={i}>{item.children?.map((c) => c.text).join("")}</li>
-            ))}
-          </ul>
-        );
-      }
-
-      const text = block.children?.map((child) => child.text).join("") || "";
-
-      return <p key={idx}>{text}</p>;
-    });
-  };
-
   return (
     <div className="modalOverlay">
       <div className="modalContainer">
-        <button className="topCloseBtn" onClick={onClose}>
-          ✖
+        <button
+          type="button"
+          className="topCloseBtn"
+          onClick={onClose}
+          aria-label="Close blog"
+        >
+          ×
         </button>
 
         <h2 className="title">{blog.title}</h2>
@@ -61,7 +48,11 @@ const BlogModal = ({
           </>
         )}
 
-        <div className="content">{renderContent(blog.content)}</div>
+        <BlogContent
+          content={blog.content}
+          className="content blog-rich-content"
+          theme={theme}
+        />
 
         {user ? (
           <>
